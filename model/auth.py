@@ -5,7 +5,7 @@ class Auth:
 
     @staticmethod
     def hash_password(password):
-        password_bytes = password.enconde('utf-8')
+        password_bytes = password.encode('utf-8')
         return bcrypt.hashpw(password_bytes, bcrypt.gensalt())
 
     @staticmethod
