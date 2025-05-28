@@ -8,6 +8,12 @@ class Auth:
         password_bytes = password.enconde('utf-8')
         return bcrypt.hashpw(password_bytes, bcrypt.gensalt())
 
-    # TODO: def __verify_password(password, password_hash):
+    @staticmethod
+    def verify_password(password, password_hash):
+        return bcrypt.checkpw(password.encode('utf-8'), password_hash)
 
-    # TODO: def auth(username, password):
+    @staticmethod
+    def auth(employee, username, password):
+        if employee.username == username and Auth.verify_password(password, employee.password_hash):
+            return True
+        return False

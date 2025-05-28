@@ -18,3 +18,11 @@ class EmployeeController:
             return
         for employee in self.employees:
             print(employee)
+
+    def auth(self, username, password):
+        for employee in self.employees:
+            if Auth.auth(employee, username, password):
+                print(f'Welcome, {employee.name}')
+                return True
+        print('Authentication failed.')
+        return False
