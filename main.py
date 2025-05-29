@@ -1,4 +1,3 @@
-from controller.employee_controller import EmployeeController
 from view.employee_view import *
 
 

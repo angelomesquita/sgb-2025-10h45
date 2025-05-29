@@ -1,18 +1,19 @@
 from model.employee import Employee
 from model.auth import Auth
+from typing import Optional
 
 
 class EmployeeController:
     def __init__(self):
         self.employees = []
 
-    def register(self, name, cpf, role, login, password):
+    def register(self, name: str, cpf: str, role: str, login: str, password: str) -> None:
         password_hash = Auth.hash_password(password)
         employee = Employee(name, cpf, role, login, password_hash)
         self.employees.append(employee)
         print('✅ Employee successfully registered!\n')
 
-    def list(self):
+    def list(self) -> None:
         if not self.employees:
             print("No employees registered yet.")
             return
@@ -20,14 +21,14 @@ class EmployeeController:
             if not employee.deleted:
                 print(employee)
 
-    def find(self, cpf):
+    def find(self, cpf: str) -> Optional[Employee]:
         for employee in self.employees:
             if employee.cpf == cpf and employee.deleted is not True:
                 return employee
         print('Employee not found!\n')
         return None
 
-    def update(self, name, cpf, role, login, password):
+    def update(self, name: str, cpf: str, role: str, login: str, password: str) -> None:
         for employee in self.employees:
             if employee.cpf == cpf and employee.deleted is not True:
                 if name is not None:
@@ -42,7 +43,7 @@ class EmployeeController:
                 return
         print('Employee not found!\n')
 
-    def delete(self, cpf):
+    def delete(self, cpf: str) -> None:
         for employee in self.employees:
             if employee.cpf == cpf and employee.deleted is not True:
                 employee.deleted = True
@@ -50,7 +51,7 @@ class EmployeeController:
                 return
         print('Employee not found!\n')
 
-    def auth(self, username, password):
+    def auth(self, username: str, password: str) -> bool:
         for employee in self.employees:
             if Auth.auth(employee, username, password) and employee.deleted is not True:
                 print(f'Welcome, {employee.name}')
