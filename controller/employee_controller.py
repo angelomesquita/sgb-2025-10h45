@@ -17,18 +17,19 @@ class EmployeeController:
             print("No employees registered yet.")
             return
         for employee in self.employees:
-            print(employee)
+            if not employee.deleted:
+                print(employee)
 
     def find(self, cpf):
         for employee in self.employees:
-            if employee.cpf == cpf:
+            if employee.cpf == cpf and employee.deleted is not True:
                 return employee
         print('Employee not found!\n')
         return None
 
     def update(self, name, cpf, role, login, password):
         for employee in self.employees:
-            if employee.cpf == cpf:
+            if employee.cpf == cpf and employee.deleted is not True:
                 if name is not None:
                     employee.name = name
                 if role is not None:
@@ -41,9 +42,17 @@ class EmployeeController:
                 return
         print('Employee not found!\n')
 
+    def delete(self, cpf):
+        for employee in self.employees:
+            if employee.cpf == cpf and employee.deleted is not True:
+                employee.deleted = True
+                print('Employee successfully deleted!\n')
+                return
+        print('Employee not found!\n')
+
     def auth(self, username, password):
         for employee in self.employees:
-            if Auth.auth(employee, username, password):
+            if Auth.auth(employee, username, password) and employee.deleted is not True:
                 print(f'Welcome, {employee.name}')
                 return True
         print('Authentication failed.')

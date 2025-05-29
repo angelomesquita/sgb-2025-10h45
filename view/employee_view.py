@@ -8,6 +8,7 @@ def show_menu():
     print('2. List Employees')  # Listar Funcionarios
     print('3. Authenticate Employee')  # Autenticar Funcionario
     print('4. Update Employee') # Atualizar Funcionario
+    print('5. Delete Employee') # Apagar Funcionario
     print('0. Exit')  # Sair
 
 
@@ -26,13 +27,21 @@ def list_employees(controller):
 
 def update_employee(controller):
     print('\n=== Update Employee ===')
-    cpf = input('CPF: ')
+    cpf = get_cpf_employee()
     employee = controller.find(cpf)
     if employee:
         data = get_employee_data()
         controller.update(*data)
     press_enter_to_continue()
 
+
+def delete_employee(controller):
+    print('\n=== Delete Employee ===')
+    cpf = get_cpf_employee()
+    employee = controller.find(cpf)
+    if employee:
+        controller.delete(cpf)
+    press_enter_to_continue()
 
 def authenticate_employee(controller):
     print('\n=== Authenticate Employee ===')
@@ -43,10 +52,9 @@ def authenticate_employee(controller):
 
 def get_employee_data():
     name = input('Name: ')
-    cpf = input('CPF: ')
+    cpf = get_cpf_employee()
     role = input('Role: ')
-    login = input('Username: ')
-    password = input('Password: ')
+    login, password = get_auth_data()
     return name, cpf, role, login, password
 
 
@@ -55,6 +63,10 @@ def get_auth_data():
     password = input('Password: ')
     return username, password
 
+
+def get_cpf_employee():
+    cpf = input('CPF: ')
+    return cpf
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
