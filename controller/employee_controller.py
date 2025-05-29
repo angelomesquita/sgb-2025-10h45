@@ -17,9 +17,12 @@ class EmployeeController:
         if not self.employees:
             print("No employees registered yet.")
             return
-        for employee in self.employees:
-            if not employee.deleted:
-                print(employee)
+        active_employees = [emp for emp in self.employees if not getattr(emp, 'deleted', False)]
+        if not active_employees:
+            print("No active employees found.")
+            return
+        for employee in active_employees:
+            print(employee)
 
     def find(self, cpf: str) -> Optional[Employee]:
         for employee in self.employees:
