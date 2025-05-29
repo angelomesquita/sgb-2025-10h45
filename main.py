@@ -15,6 +15,8 @@ def main():
             list_employees(controller)
         elif option == '3':
             authenticate_employee(controller)
+        elif option == '4':
+            update_employee(controller)
         elif option == '0':
             print('Exiting the system...') # Saindo do sistema
             break

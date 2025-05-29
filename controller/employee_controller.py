@@ -19,6 +19,28 @@ class EmployeeController:
         for employee in self.employees:
             print(employee)
 
+    def find(self, cpf):
+        for employee in self.employees:
+            if employee.cpf == cpf:
+                return employee
+        print('Employee not found!\n')
+        return None
+
+    def update(self, name, cpf, role, login, password):
+        for employee in self.employees:
+            if employee.cpf == cpf:
+                if name is not None:
+                    employee.name = name
+                if role is not None:
+                    employee.role = role
+                if login is not None:
+                    employee.username = login
+                if password is not None:
+                    employee.password_hash = Auth.hash_password(password)
+                print('Employee successfully updated!\n')
+                return
+        print('Employee not found!\n')
+
     def auth(self, username, password):
         for employee in self.employees:
             if Auth.auth(employee, username, password):

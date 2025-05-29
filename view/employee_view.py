@@ -3,11 +3,12 @@ import os
 
 def show_menu():
     clear_screen()
-    print('\n=== Library Management System ===') # Sistema Gerenciador de Bibliotecas
-    print('1. Register Employee ') # Cadastrar Funcionario
-    print('2. List Employees') # Listar Funcionarios
-    print('3. Authenticate Employee') # Autenticar Funcionario
-    print('0. Exit') # Sair
+    print('\n=== Library Management System ===')  # Sistema Gerenciador de Bibliotecas
+    print('1. Register Employee ')  # Cadastrar Funcionario
+    print('2. List Employees')  # Listar Funcionarios
+    print('3. Authenticate Employee')  # Autenticar Funcionario
+    print('4. Update Employee') # Atualizar Funcionario
+    print('0. Exit')  # Sair
 
 
 def register_employee(controller):
@@ -23,11 +24,22 @@ def list_employees(controller):
     press_enter_to_continue()
 
 
+def update_employee(controller):
+    print('\n=== Update Employee ===')
+    cpf = input('CPF: ')
+    employee = controller.find(cpf)
+    if employee:
+        data = get_employee_data()
+        controller.update(*data)
+    press_enter_to_continue()
+
+
 def authenticate_employee(controller):
     print('\n=== Authenticate Employee ===')
     auth_data = get_auth_data()
     controller.auth(*auth_data)
     press_enter_to_continue()
+
 
 def get_employee_data():
     name = input('Name: ')
