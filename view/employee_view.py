@@ -1,5 +1,6 @@
 import os
 from controller.employee_controller import EmployeeController
+from controller.auth_controller import AuthController
 from typing import Tuple
 
 
@@ -52,8 +53,8 @@ def delete_employee(controller: EmployeeController) -> None:
 
 def authenticate_employee(controller: EmployeeController) -> None:
     print('\n=== Authenticate Employee ===')
-    auth_data = get_auth_data()
-    controller.auth(*auth_data)
+    username, password = get_auth_data()
+    AuthController.auth(controller.employees, username, password)
     press_enter_to_continue()
 
 
