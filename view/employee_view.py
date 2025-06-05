@@ -34,6 +34,8 @@ def update_employee(controller: EmployeeController) -> None:
     if employee:
         data = get_employee_data()
         controller.update(*data)
+    else:
+        print('Employee not found!\n')
     press_enter_to_continue()
 
 
