@@ -4,7 +4,7 @@ from controller.auth_controller import AuthController
 from typing import Tuple
 
 
-def show_menu():
+def show_menu() -> None:
     clear_screen()
     print('\n=== Library Management System ===')  # Sistema Gerenciador de Bibliotecas
     print('1. Register Employee ')  # Cadastrar Funcionario
