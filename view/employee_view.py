@@ -2,6 +2,7 @@ import os
 from controller.employee_controller import EmployeeController
 from controller.auth_controller import AuthController
 from typing import Tuple
+from getpass import getpass
 
 
 def show_menu() -> None:
@@ -68,7 +69,7 @@ def get_employee_data() -> Tuple[str, str, str, str, str]:
 
 def get_auth_data() -> Tuple[str, str]:
     username = input('Username: ')
-    password = input('Password: ')
+    password = getpass('Password: ')
     return username, password
 
 
