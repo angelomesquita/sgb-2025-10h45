@@ -1,66 +1,36 @@
-from model.employee import Employee
+from model.category import Category
+from model.customer import Customer
 from model.auth import Auth
 from typing import Optional
 
 
-class EmployeeController:
+class CustomerController:
     def __init__(self):
-        self.employees = []
+        self.customers = []
 
-    def register(self, name: str, cpf: str, role: str, login: str, password: str) -> None:
+    def register(self, name: str, cpf: str, contact: str, category: str, password: str) -> None:
         if self.find(cpf):
-            print('An Employee with this CPF is already registered!\n')
+            print('An Customer with this CPF is already registered!\n')
             return
         if self.find_deleted(cpf):
-            print('An Employee with this CPF was previously deleted.\n')
+            print('An Customer with this CPF was previously deleted.\n')
+            return
+        if not Category.validate(category):
+            print('Invalid category. Try again.\n')
             return
         password_hash = Auth.hash_password(password)
-        employee = Employee(name, cpf, role, login, password_hash)
-        self.employees.append(employee)
-        print('✅ Employee successfully registered!\n')
+        customer = Customer(name, cpf, contact, category, password_hash)
+        self.customers.append(customer)
+        print('✅ Customer successfully registered!\n')
 
-    def list(self) -> None:
-        if not self.employees:
-            print("No employees registered yet.")
-            return
-        active_employees = [emp for emp in self.employees if not getattr(emp, 'deleted', False)]
-        if not active_employees:
-            print("No active employees found.")
-            return
-        for employee in active_employees:
-            print(employee)
-
-    def find(self, cpf: str) -> Optional[Employee]:
-        for employee in self.employees:
-            if employee.cpf == cpf and employee.deleted is not True:
-                return employee
+    def find(self, cpf: str) -> Optional[Customer]:
+        for customer in self.customers:
+            if customer.cpf == cpf and customer.deleted is not True:
+                return customer
         return None
 
-    def find_deleted(self, cpf: str) -> Optional[Employee]:
-        for employee in self.employees:
-            if employee.cpf == cpf and getattr(employee, 'deleted', False) is True:
-                return employee
+    def find_deleted(self, cpf: str) -> Optional[Customer]:
+        for customer in self.customers:
+            if customer.cpf == cpf and getattr(customer, 'deleted', False) is True:
+                return customer
         return None
-
-    def update(self, name: str, cpf: str, role: str, login: str, password: str) -> None:
-        for employee in self.employees:
-            if employee.cpf == cpf and employee.deleted is not True:
-                if name is not None:
-                    employee.name = name
-                if role is not None:
-                    employee.role = role
-                if login is not None:
-                    employee.username = login
-                if password is not None:
-                    employee.password_hash = Auth.hash_password(password)
-                print('Employee successfully updated!\n')
-                return
-        print('Employee not found!\n')
-
-    def delete(self, cpf: str) -> None:
-        for employee in self.employees:
-            if employee.cpf == cpf and employee.deleted is not True:
-                employee.deleted = True
-                print('Employee successfully deleted!\n')
-                return
-        print('Employee not found!\n')
