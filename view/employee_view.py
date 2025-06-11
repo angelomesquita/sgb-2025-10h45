@@ -28,35 +28,35 @@ class EmployeeView(View):
             option = input('Select an option: ')  # Escolha uma opção
 
             if option == '1':
-                self.register_employee()
+                self.register()
             elif option == '2':
-                self.list_employees()
+                self.list()
             elif option == '3':
-                self.authenticate_employee()
+                self.authenticate()
             elif option == '4':
-                self.update_employee()
+                self.update()
             elif option == '5':
-                self.delete_employee()
+                self.delete()
             elif option == '0':
                 break
             else:
                 print(self.__MENU_INVALID_OPTION)  # Opção inválida
                 self.press_enter_to_continue()
 
-    def register_employee(self) -> None:
+    def register(self) -> None:
         print('\n=== Register Employee ===')
         data = self.get_employee_data()
         self.controller.register(*data)
         self.press_enter_to_continue()
         self.clear_screen()
 
-    def list_employees(self) -> None:
+    def list(self) -> None:
         print('\n=== List Employees ===')
         self.controller.list()
         self.press_enter_to_continue()
         self.clear_screen()
 
-    def update_employee(self) -> None:
+    def update(self) -> None:
         print('\n=== Update Employee ===')
         cpf = self.get_cpf_employee()
         employee = self.controller.find(cpf)
@@ -68,7 +68,7 @@ class EmployeeView(View):
         self.press_enter_to_continue()
         self.clear_screen()
 
-    def delete_employee(self) -> None:
+    def delete(self) -> None:
         print('\n=== Delete Employee ===')
         cpf = self.get_cpf_employee()
         employee = self.controller.find(cpf)
@@ -79,7 +79,7 @@ class EmployeeView(View):
         self.press_enter_to_continue()
         self.clear_screen()
 
-    def authenticate_employee(self) -> None:
+    def authenticate(self) -> None:
         print('\n=== Authenticate Employee ===')
         username, password = self.get_auth_data()
         AuthController.auth(self.controller.employees, username, password)
