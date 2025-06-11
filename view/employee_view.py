@@ -1,90 +1,103 @@
-import os
+
 from controller.employee_controller import EmployeeController
 from controller.auth_controller import AuthController
 from typing import Tuple
 from getpass import getpass
+from view.view import View
 
 
-def show_menu() -> None:
-    clear_screen()
-    print('\n=== Library Management System ===')  # Sistema Gerenciador de Bibliotecas
-    print('1. Register Employee ')  # Cadastrar Funcionario
-    print('2. List Employees')  # Listar Funcionarios
-    print('3. Authenticate Employee')  # Autenticar Funcionario
-    print('4. Update Employee')  # Atualizar Funcionario
-    print('5. Delete Employee')  # Apagar Funcionario
-    print('0. Exit')  # Sair
+class EmployeeView(View):
 
+    __EMPLOYEE_NOT_FOUND = 'Employee not found!\n'
+    __MENU_INVALID_OPTION = 'Invalid option.'
 
-def register_employee(controller: EmployeeController) -> None:
-    print('\n=== Register Employee ===')
-    data = get_employee_data()
-    controller.register(*data)
-    press_enter_to_continue()
+    def __init__(self):
+        self.controller = EmployeeController()
 
+    def show_menu(self) -> None:
+        while True:
+            self.clear_screen()
+            print('\n=== Employee Module ===')  # Módulo de Funcionario
+            print('1. Register Employee ')  # Cadastrar Funcionario
+            print('2. List Employees')  # Listar Funcionarios
+            print('3. Authenticate Employee')  # Autenticar Funcionario
+            print('4. Update Employee')  # Atualizar Funcionario
+            print('5. Delete Employee')  # Apagar Funcionario
+            print('0. Back to main menu')  # Voltar para o Menu Principal
 
-def list_employees(controller: EmployeeController) -> None:
-    print('\n=== List Employees ===')
-    controller.list()
-    press_enter_to_continue()
+            option = input('Select an option: ')  # Escolha uma opção
 
+            if option == '1':
+                self.register_employee()
+            elif option == '2':
+                self.list_employees()
+            elif option == '3':
+                self.authenticate_employee()
+            elif option == '4':
+                self.update_employee()
+            elif option == '5':
+                self.delete_employee()
+            elif option == '0':
+                break
+            else:
+                print(self.__MENU_INVALID_OPTION)  # Opção inválida
+                self.press_enter_to_continue()
 
-def update_employee(controller: EmployeeController) -> None:
-    print('\n=== Update Employee ===')
-    cpf = get_cpf_employee()
-    employee = controller.find(cpf)
-    if employee:
-        data = get_employee_data()
-        controller.update(*data)
-    else:
-        print(employee_not_found())
-    press_enter_to_continue()
+    def register_employee(self) -> None:
+        print('\n=== Register Employee ===')
+        data = self.get_employee_data()
+        self.controller.register(*data)
+        self.press_enter_to_continue()
+        self.clear_screen()
 
+    def list_employees(self) -> None:
+        print('\n=== List Employees ===')
+        self.controller.list()
+        self.press_enter_to_continue()
+        self.clear_screen()
 
-def delete_employee(controller: EmployeeController) -> None:
-    print('\n=== Delete Employee ===')
-    cpf = get_cpf_employee()
-    employee = controller.find(cpf)
-    if employee:
-        controller.delete(cpf)
-    else:
-        print(employee_not_found())
-    press_enter_to_continue()
+    def update_employee(self) -> None:
+        print('\n=== Update Employee ===')
+        cpf = self.get_cpf_employee()
+        employee = self.controller.find(cpf)
+        if employee:
+            data = self.get_employee_data()
+            self.controller.update(*data)
+        else:
+            print(self.__EMPLOYEE_NOT_FOUND)
+        self.press_enter_to_continue()
+        self.clear_screen()
 
+    def delete_employee(self) -> None:
+        print('\n=== Delete Employee ===')
+        cpf = self.get_cpf_employee()
+        employee = self.controller.find(cpf)
+        if employee:
+            self.controller.delete(cpf)
+        else:
+            print(self.__EMPLOYEE_NOT_FOUND)
+        self.press_enter_to_continue()
+        self.clear_screen()
 
-def authenticate_employee(controller: EmployeeController) -> None:
-    print('\n=== Authenticate Employee ===')
-    username, password = get_auth_data()
-    AuthController.auth(controller.employees, username, password)
-    press_enter_to_continue()
+    def authenticate_employee(self) -> None:
+        print('\n=== Authenticate Employee ===')
+        username, password = self.get_auth_data()
+        AuthController.auth(self.controller.employees, username, password)
+        self.press_enter_to_continue()
+        self.clear_screen()
 
+    def get_employee_data(self) -> Tuple[str, str, str, str, str]:
+        name = input('Name: ')
+        cpf = self.get_cpf_employee()
+        role = input('Role: ')
+        login, password = self.get_auth_data()
+        return name, cpf, role, login, password
 
-def get_employee_data() -> Tuple[str, str, str, str, str]:
-    name = input('Name: ')
-    cpf = get_cpf_employee()
-    role = input('Role: ')
-    login, password = get_auth_data()
-    return name, cpf, role, login, password
+    def get_auth_data(self) -> Tuple[str, str]:
+        username = input('Username: ')
+        password = getpass('Password: ')
+        return username, password
 
-
-def get_auth_data() -> Tuple[str, str]:
-    username = input('Username: ')
-    password = getpass('Password: ')
-    return username, password
-
-
-def get_cpf_employee() -> str:
-    cpf = input('CPF: ')
-    return cpf
-
-
-def clear_screen() -> None:
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-
-def press_enter_to_continue() -> None:
-    input('Press Enter to continue...')
-
-
-def employee_not_found() -> str:
-    return 'Employee not found!\n'
+    def get_cpf_employee(self) -> str:
+        cpf = input('CPF: ')
+        return cpf
