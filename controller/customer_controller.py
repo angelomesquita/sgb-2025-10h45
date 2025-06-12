@@ -49,3 +49,18 @@ class CustomerController:
             if customer.cpf == cpf and getattr(customer, 'deleted', False) is True:
                 return customer
         return None
+
+    def update(self, name: str, cpf: str, contact: str, category: str, password: str) -> None:
+        for customer in self.customers:
+            if customer.cpf == cpf and customer.deleted is not True:
+                if name is not None:
+                    customer.name = name
+                if contact is not None:
+                    customer.contact = contact
+                if category is not None:
+                    customer.category = category
+                if password is not None:
+                    customer.password_hash = Auth.hash_password(password)
+                print('Customer successfully updated!\n')
+                return
+        print('Customer not found!\n')

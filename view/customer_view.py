@@ -8,6 +8,8 @@ from view.view import View
 
 class CustomerView(View):
 
+    __CUSTOMER_NOT_FOUND = 'Customer not found!\n'
+
     def __init__(self):
         self.controller = CustomerController()
 
@@ -17,6 +19,8 @@ class CustomerView(View):
             print('\n=== Customer Module ===')  # Módulo de Usuário
             print('1. Register Customer ')
             print('2. List Customers ')
+            print('3. Update Customer')  # Atualizar Usuário
+            # TODO: print('4. Delete Customer')  # Apagar Usuário
             print('0. Back to main menu')  # Voltar para o Menu Principal
 
             option = input('Select an option: ')  # Escolha uma opção
@@ -25,6 +29,8 @@ class CustomerView(View):
                 self.register()
             elif option == '2':
                 self.list()
+            elif option == '3':
+                self.update()
             elif option == '0':
                 break
             else:
@@ -41,6 +47,18 @@ class CustomerView(View):
     def list(self) -> None:
         print('\n=== List Customers ===')
         self.controller.list()
+        self.press_enter_to_continue()
+        self.clear_screen()
+
+    def update(self) -> None:
+        print('\n=== Update Customer ===')
+        cpf = self.get_cpf_customer()
+        customer = self.controller.find(cpf)
+        if customer:
+            data = self.get_customer_data()
+            self.controller.update(*data)
+        else:
+            print(self.__CUSTOMER_NOT_FOUND)
         self.press_enter_to_continue()
         self.clear_screen()
 
