@@ -1,6 +1,7 @@
 
 from controller.employee_controller import EmployeeController
 from controller.auth_controller import AuthController
+from model.cpf import Cpf
 from typing import Tuple
 from getpass import getpass
 from view.view import View
@@ -99,5 +100,9 @@ class EmployeeView(View):
         return username, password
 
     def get_cpf_employee(self) -> str:
-        cpf = input('CPF: ')
-        return cpf
+        # TODO: verify if cpf number already exists
+        while True:
+            cpf = input('CPF: ')
+            if Cpf.validate(cpf):
+                return cpf
+            print('Invalid CPF. Try again.\n')
