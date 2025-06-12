@@ -23,6 +23,17 @@ class CustomerController:
         self.customers.append(customer)
         print('✅ Customer successfully registered!\n')
 
+    def list(self) -> None:
+        if not self.customers:
+            print("No customers registered yet.")
+            return
+        active_customers = [cust for cust in self.customers if not getattr(cust, 'deleted', False)]
+        if not active_customers:
+            print("No active customers found.")
+            return
+        for customer in active_customers:
+            print(customer)
+
     def find(self, cpf: str) -> Optional[Customer]:
         for customer in self.customers:
             if customer.cpf == cpf and customer.deleted is not True:

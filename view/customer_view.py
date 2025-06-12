@@ -6,33 +6,53 @@ from getpass import getpass
 
 class CustomerView(View):
 
-    def show_menu(self) -> None:
-        self.clear_screen()
-        print('\n=== Customer Module ===')  # Módulo de Usuário
-        print('1. Register Customer ')  # Cadastrar Usuário (Estudante, Professor ou Visitante)
-        #print('2. List Employees')  # Listar Funcionarios
-        #print('3. Authenticate Employee')  # Autenticar Funcionario
-        #print('4. Update Employee')  # Atualizar Funcionario
-        #print('5. Delete Employee')  # Apagar Funcionario
-        #print('0. Exit')  # Sair
+    def __init__(self):
+        self.controller = CustomerController()
 
-    def register_employee(self, controller: CustomerController) -> None:
-        print('\n=== Register Employee ===')
+    def show_menu(self) -> None:
+        while True:
+            self.clear_screen()
+            print('\n=== Customer Module ===')  # Módulo de Usuário
+            print('1. Register Customer ')
+            print('2. List Customers ')
+            print('0. Back to main menu')  # Voltar para o Menu Principal
+
+            option = input('Select an option: ')  # Escolha uma opção
+
+            if option == '1':
+                self.register()
+            elif option == '2':
+                self.list()
+            elif option == '0':
+                break
+            else:
+                print(self.__MENU_INVALID_OPTION)  # Opção inválida
+                self.press_enter_to_continue()
+
+    def register(self) -> None:
+        print('\n=== Register Customer ===')
         data = self.get_customer_data()
-        controller.register(*data)
+        self.controller.register(*data)
         self.press_enter_to_continue()
+        self.clear_screen()
+
+    def list(self) -> None:
+        print('\n=== List Customers ===')
+        self.controller.list()
+        self.press_enter_to_continue()
+        self.clear_screen()
 
     def get_customer_data(self) -> Tuple[str, str, str, str, str]:
         name = input('Name: ')
         cpf = self.get_cpf_customer()
-        role = input('Role: ')
-        login, password = self.get_auth_data()
-        return name, cpf, role, login, password
+        contact = input('Contact: ')
+        category = input('Category: ')
+        password = self.get_auth_data()
+        return name, cpf, contact, category, password
 
     def get_auth_data(self) -> Tuple[str, str]:
-        username = input('Username: ')
         password = getpass('Password: ')
-        return username, password
+        return password
 
     def get_cpf_customer(self) -> str:
         cpf = input('CPF: ')

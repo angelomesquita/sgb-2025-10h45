@@ -14,7 +14,6 @@ def main():
             employee_view = EmployeeView()
             employee_view.show_menu()
             clear_screen()
-
         elif option == '2':
             customer_view = CustomerView()
             customer_view.show_menu()
