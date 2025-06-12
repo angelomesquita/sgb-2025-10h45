@@ -1,7 +1,8 @@
-from view.view import View
 from controller.customer_controller import CustomerController
-from typing import Tuple
 from getpass import getpass
+from model.category import Category
+from typing import Tuple
+from view.view import View
 
 
 class CustomerView(View):
@@ -46,13 +47,20 @@ class CustomerView(View):
         name = input('Name: ')
         cpf = self.get_cpf_customer()
         contact = input('Contact: ')
-        category = input('Category: ')
-        password = self.get_auth_data()
+        category = self.get_category_customer()
+        password = getpass('Password: ')
         return name, cpf, contact, category, password
 
-    def get_auth_data(self) -> Tuple[str, str]:
-        password = getpass('Password: ')
-        return password
+    def get_category_customer(self) -> str:
+        print('Choose category: ')
+        options = Category.options()
+        for i, (value, label) in enumerate(options, start=1):
+            print(f"{i}. {label}")
+        while True:
+            choice = input('Enter the category number: ')
+            if choice.isdigit() and 1 <= int(choice) <= len(options):
+                return options[int(choice)-1][0]
+        return 'Invalid choice. Try again.'
 
     def get_cpf_customer(self) -> str:
         cpf = input('CPF: ')
