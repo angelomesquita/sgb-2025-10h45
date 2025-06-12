@@ -1,6 +1,7 @@
 from model.category import Category
 from model.customer import Customer
 from model.auth import Auth
+from model.cpf import Cpf
 from typing import Optional
 
 
@@ -14,6 +15,9 @@ class CustomerController:
             return
         if self.find_deleted(cpf):
             print('An Customer with this CPF was previously deleted.\n')
+            return
+        if not Cpf.validate(cpf):
+            print('Invalid CPF. Try again.\n')
             return
         if not Category.validate(category):
             print('Invalid category. Try again.\n')
