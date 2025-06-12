@@ -64,3 +64,11 @@ class CustomerController:
                 print('Customer successfully updated!\n')
                 return
         print('Customer not found!\n')
+
+    def delete(self, cpf: str) -> None:
+        for customer in self.customers:
+            if customer.cpf == cpf and customer.deleted is not True:
+                customer.deleted = True
+                print('Customer successfully deleted!\n')
+                return
+        print('Customer not found!\n')

@@ -20,7 +20,7 @@ class CustomerView(View):
             print('1. Register Customer ')
             print('2. List Customers ')
             print('3. Update Customer')  # Atualizar Usuário
-            # TODO: print('4. Delete Customer')  # Apagar Usuário
+            print('4. Delete Customer')  # Apagar Usuário
             print('0. Back to main menu')  # Voltar para o Menu Principal
 
             option = input('Select an option: ')  # Escolha uma opção
@@ -31,6 +31,8 @@ class CustomerView(View):
                 self.list()
             elif option == '3':
                 self.update()
+            elif option == '4':
+                self.delete()
             elif option == '0':
                 break
             else:
@@ -57,6 +59,17 @@ class CustomerView(View):
         if customer:
             data = self.get_customer_data()
             self.controller.update(*data)
+        else:
+            print(self.__CUSTOMER_NOT_FOUND)
+        self.press_enter_to_continue()
+        self.clear_screen()
+
+    def delete(self) -> None:
+        print('\n=== Delete Customer ===')
+        cpf = self.get_cpf_customer()
+        customer = self.controller.find(cpf)
+        if customer:
+            self.controller.delete(cpf)
         else:
             print(self.__CUSTOMER_NOT_FOUND)
         self.press_enter_to_continue()
