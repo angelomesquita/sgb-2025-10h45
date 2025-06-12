@@ -1,6 +1,7 @@
 from controller.customer_controller import CustomerController
 from getpass import getpass
 from model.category import Category
+from model.cpf import Cpf
 from typing import Tuple
 from view.view import View
 
@@ -63,5 +64,8 @@ class CustomerView(View):
         return 'Invalid choice. Try again.'
 
     def get_cpf_customer(self) -> str:
-        cpf = input('CPF: ')
-        return cpf
+        while True:
+            cpf = input('CPF: ')
+            if Cpf.validate(cpf):
+                return cpf
+            print('Invalid CPF. Try again.\n')
