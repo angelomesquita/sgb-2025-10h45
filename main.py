@@ -24,6 +24,7 @@ def main():
         else:
             print('Invalid option.') # Opção inválida
             press_enter_to_continue()
+            clear_screen()
 
 
 def clear_screen() -> None:
