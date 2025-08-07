@@ -30,10 +30,36 @@ class Cpf:
 
     @staticmethod
     def validate(cpf: str) -> bool:
+        """
+         Validates a CPF based on its check digits.
+         Uses a recursive call to calculate the weighted sum.
+        """
         cleaned_cpf = Cpf.clean(cpf)
-        return cleaned_cpf.isdigit() and len(cleaned_cpf) == Cpf._CPF_LENGTH
+
+        if not (cleaned_cpf.isdigit() and len(cleaned_cpf) == Cpf._CPF_LENGTH):
+            return False
+
+        if cleaned_cpf == cleaned_cpf[0] * Cpf._CPF_LENGTH:
+            return False
+
+        first_digit = Cpf.__calculate_check_digit(cpf=cleaned_cpf, length=9, initial_weight=10)
+        second_digit = Cpf.__calculate_check_digit(cpf=cleaned_cpf, length=10, initial_weight=11)
+
+        return cleaned_cpf[-2:] == f"{first_digit}{second_digit}"
 
     @staticmethod
     def clean(cpf: str) -> str:
         """ Removes non-numeric characters from the CPF """
         return ''.join(filter(str.isdigit, cpf))
+
+    @staticmethod
+    def __calculate_check_digit(cpf: str, length: int, initial_weight: int) -> int:
+        total = Cpf.__recursive_weighted_sum(cpf[:length], initial_weight)
+        remainder = total % Cpf._CPF_LENGTH
+        return 0 if remainder < 2 else Cpf._CPF_LENGTH - remainder
+
+    @staticmethod
+    def __recursive_weighted_sum(digits: str, weight: int) -> int:
+        if not digits:
+            return 0
+        return int(digits[0]) * weight + Cpf.__recursive_weighted_sum(digits[1:], weight - 1)
