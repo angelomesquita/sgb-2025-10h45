@@ -1,8 +1,8 @@
-from controller.customer_controller import CustomerController
 from getpass import getpass
-from model.category import Category
-from model.cpf import Cpf
 from typing import Tuple
+
+from controller.customer_controller import CustomerController
+from model.category import Category
 from view.view import View
 
 
@@ -54,7 +54,7 @@ class CustomerView(View):
 
     def update(self) -> None:
         print('\n=== Update Customer ===')
-        cpf = self.get_cpf_customer()
+        cpf = self.get_cpf()
         customer = self.controller.find(cpf)
         if customer:
             data = self.get_customer_data()
@@ -66,7 +66,7 @@ class CustomerView(View):
 
     def delete(self) -> None:
         print('\n=== Delete Customer ===')
-        cpf = self.get_cpf_customer()
+        cpf = self.get_cpf()
         customer = self.controller.find(cpf)
         if customer:
             self.controller.delete(cpf)
@@ -77,7 +77,7 @@ class CustomerView(View):
 
     def get_customer_data(self) -> Tuple[str, str, str, str, str]:
         name = input('Name: ')
-        cpf = self.get_cpf_customer()
+        cpf = self.get_cpf()
         contact = input('Contact: ')
         category = self.get_category_customer()
         password = getpass('Password: ')
@@ -92,11 +92,3 @@ class CustomerView(View):
             choice = input('Enter the category number: ')
             if choice.isdigit() and 1 <= int(choice) <= len(options):
                 return options[int(choice)-1][0]
-        return 'Invalid choice. Try again.'
-
-    def get_cpf_customer(self) -> str:
-        while True:
-            cpf = input('CPF: ')
-            if Cpf.validate(cpf):
-                return cpf
-            print('Invalid CPF. Try again.\n')

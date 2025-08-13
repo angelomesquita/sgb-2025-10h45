@@ -1,16 +1,13 @@
-
-from controller.employee_controller import EmployeeController
-from controller.auth_controller import AuthController
-from model.cpf import Cpf
-from typing import Tuple
 from getpass import getpass
+from typing import Tuple
+
+from controller.auth_controller import AuthController
+from controller.employee_controller import EmployeeController
 from view.view import View
 
 
 class EmployeeView(View):
-
     __EMPLOYEE_NOT_FOUND = 'Employee not found!\n'
-
 
     def __init__(self):
         self.controller = EmployeeController()
@@ -59,7 +56,7 @@ class EmployeeView(View):
 
     def update(self) -> None:
         print('\n=== Update Employee ===')
-        cpf = self.get_cpf_employee()
+        cpf = self.get_cpf()
         employee = self.controller.find(cpf)
         if employee:
             data = self.get_employee_data()
@@ -71,7 +68,7 @@ class EmployeeView(View):
 
     def delete(self) -> None:
         print('\n=== Delete Employee ===')
-        cpf = self.get_cpf_employee()
+        cpf = self.get_cpf()
         employee = self.controller.find(cpf)
         if employee:
             self.controller.delete(cpf)
@@ -89,7 +86,7 @@ class EmployeeView(View):
 
     def get_employee_data(self) -> Tuple[str, str, str, str, str]:
         name = input('Name: ')
-        cpf = self.get_cpf_employee()
+        cpf = self.get_cpf()
         role = input('Role: ')
         login, password = self.get_auth_data()
         return name, cpf, role, login, password
@@ -98,11 +95,3 @@ class EmployeeView(View):
         username = input('Username: ')
         password = getpass('Password: ')
         return username, password
-
-    def get_cpf_employee(self) -> str:
-        # TODO: verify if cpf number already exists
-        while True:
-            cpf = input('CPF: ')
-            if Cpf.validate(cpf):
-                return cpf
-            print('Invalid CPF. Try again.\n')
