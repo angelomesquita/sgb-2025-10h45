@@ -2,13 +2,14 @@ class Employee:
 
     # TODO: apply encapsulation by converting attributes to private or protected instead of public
 
-    def __init__(self, name: str, cpf: str, role: str, username: str, password_hash: str):
+    def __init__(self, name: str, cpf: str, role: str, username: str, password_hash: str, deleted: bool = False):
+        #  TODO: Is Employee equals to Customer???
         self.name = name
         self.cpf = cpf
         self.role = role
         self.username = username
         self.password_hash = password_hash
-        self.deleted = False
+        self.deleted = deleted
 
     def __str__(self):
         return f'Name: {self.name}, CPF: {self.cpf}, Role: {self.role}, Username: {self.username}'
