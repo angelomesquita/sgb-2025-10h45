@@ -1,5 +1,6 @@
 from model.category import Category
 from model.customer import Customer
+from model.customer_dao import CustomerDao
 from model.auth import Auth
 from model.cpf import Cpf
 from typing import Optional
@@ -7,7 +8,7 @@ from typing import Optional
 
 class CustomerController:
     def __init__(self):
-        self.customers = []
+        self.customers = CustomerDao.load_all()
 
     def register(self, name: str, cpf: str, contact: str, category: str, password: str) -> None:
         if self.find(cpf):
@@ -25,6 +26,7 @@ class CustomerController:
         password_hash = Auth.hash_password(password)
         customer = Customer(name, cpf, contact, category, password_hash)
         self.customers.append(customer)
+        CustomerDao.save_all(self.customers)
         print('✅ Customer successfully registered!\n')
 
     def list(self) -> None:
@@ -62,6 +64,7 @@ class CustomerController:
                 if password is not None:
                     customer.password_hash = Auth.hash_password(password)
                 print('Customer successfully updated!\n')
+                CustomerDao.save_all(self.customers)
                 return
         print('Customer not found!\n')
 
@@ -70,5 +73,6 @@ class CustomerController:
             if customer.cpf == cpf and customer.deleted is not True:
                 customer.deleted = True
                 print('Customer successfully deleted!\n')
+                CustomerDao.save_all(self.customers)
                 return
         print('Customer not found!\n')
