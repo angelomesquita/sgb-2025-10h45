@@ -1,6 +1,7 @@
 import os
 from view.employee_view import EmployeeView
 from view.customer_view import CustomerView
+from view.view import View
 
 
 def main():
@@ -13,26 +14,18 @@ def main():
         if option == '1':
             employee_view = EmployeeView()
             employee_view.show_menu()
-            clear_screen()
+            View.clear_screen()
         elif option == '2':
             customer_view = CustomerView()
             customer_view.show_menu()
-            clear_screen()
+            View.clear_screen()
         elif option == '0':
             print('Exiting the system...') # Saindo do sistema
             break
         else:
             print('Invalid option.') # Opção inválida
-            press_enter_to_continue()
-            clear_screen()
-
-
-def clear_screen() -> None:
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-
-def press_enter_to_continue() -> None:
-    input('Press Enter to continue...')
+            View.press_enter_to_continue()
+            View.clear_screen()
 
 
 def show_app_menu():

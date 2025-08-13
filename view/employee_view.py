@@ -10,7 +10,7 @@ from view.view import View
 class EmployeeView(View):
 
     __EMPLOYEE_NOT_FOUND = 'Employee not found!\n'
-    __MENU_INVALID_OPTION = 'Invalid option.'
+
 
     def __init__(self):
         self.controller = EmployeeController()
@@ -41,7 +41,7 @@ class EmployeeView(View):
             elif option == '0':
                 break
             else:
-                print(self.__MENU_INVALID_OPTION)  # Opção inválida
+                print(View._MENU_INVALID_OPTION)  # Opção inválida
                 self.press_enter_to_continue()
 
     def register(self) -> None:

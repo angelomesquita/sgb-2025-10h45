@@ -36,7 +36,7 @@ class CustomerView(View):
             elif option == '0':
                 break
             else:
-                print(self.__MENU_INVALID_OPTION)  # Opção inválida
+                print(View._MENU_INVALID_OPTION)  # Opção inválida
                 self.press_enter_to_continue()
 
     def register(self) -> None:

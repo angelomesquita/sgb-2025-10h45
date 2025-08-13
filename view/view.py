@@ -3,6 +3,8 @@ import os
 
 class View:
 
+    _MENU_INVALID_OPTION = 'Invalid option.'
+
     @staticmethod
     def clear_screen() -> None:
         os.system('cls' if os.name == 'nt' else 'clear')
