@@ -1,2 +1,3 @@
 Aluno 001|390.690.650-70|aluno.001@escola.br|student|b'$2b$12$fkQc0re7/TXR36Ze.1SzH.bmmUy1Jm7dKmx4waNOtq7KRFK3VNzB6'|False
 Professor 001|155.191.430-13|professor.001@escola.br|teacher|b'$2b$12$x6BXi0noh/QBAb2qQjlCUuOVXkCvs4X1VAUtE9BQsReDPCJj8uwre'|False
+Visitante 001|557.069.730-67|visitante.001@visitas.com.br|visitor|b'$2b$12$tjIfWuGoAVA5M3FgHsKBKuFwPpf.cttVPQmm028hZWTkzcWHODs8e'|False
