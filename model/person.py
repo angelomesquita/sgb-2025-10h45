@@ -8,33 +8,33 @@ class Person:
         self._deleted = deleted
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self._name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._name = value
 
     @property
-    def cpf(self):
+    def cpf(self) -> str:
         return self._cpf
 
     @cpf.setter
-    def cpf(self, value: str):
+    def cpf(self, value: str) -> None:
         self._cpf = value
 
     @property
-    def password_hash(self):
+    def password_hash(self) -> str:
         return self._password_hash
 
     @password_hash.setter
-    def password_hash(self, value: str):
+    def password_hash(self, value: str) -> None:
         self._password_hash = value
 
     @property
-    def deleted(self):
+    def deleted(self) -> bool:
         return self._deleted
 
     @deleted.setter
-    def deleted(self, value: bool):
+    def deleted(self, value: bool) -> None:
         self._deleted = value
