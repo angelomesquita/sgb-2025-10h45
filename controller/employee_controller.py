@@ -2,6 +2,7 @@ from model.employee import Employee
 from model.employee_dao import EmployeeDao
 from model.auth import Auth
 from model.cpf import Cpf
+from model.logger import employee_logger
 from typing import Optional
 
 
@@ -23,6 +24,8 @@ class EmployeeController:
         employee = Employee(name, cpf, role, login, password_hash)
         self.employees.append(employee)
         EmployeeDao.save_all(self.employees)
+
+        employee_logger.info(f"Employee registered successfully: {employee}")
         print('✅ Employee successfully registered!\n')
 
     def list(self) -> None:
@@ -60,7 +63,10 @@ class EmployeeController:
                 if password is not None:
                     employee.password_hash = Auth.hash_password(password)
                 EmployeeDao.save_all(self.employees)
+
+                employee_logger.info(f"Employee updated successfully: {employee}")
                 print('Employee successfully updated!\n')
+
                 return
         print('Employee not found!\n')
 
@@ -68,7 +74,10 @@ class EmployeeController:
         for employee in self.employees:
             if employee.cpf == cpf and employee.deleted is not True:
                 employee.deleted = True
+
+                employee_logger.info(f"Employee deleted successfully: {employee}")
                 print('Employee successfully deleted!\n')
+
                 EmployeeDao.save_all(self.employees)
                 return
         print('Employee not found!\n')
