@@ -3,12 +3,19 @@ from model.employee_dao import EmployeeDao
 from model.auth import Auth
 from model.cpf import Cpf
 from model.logger import employee_logger
+from model.exceptions import *
 from typing import Optional
 
 
 class EmployeeController:
     def __init__(self):
-        self.employees = EmployeeDao.load_all()
+        try:
+            self.employees = EmployeeDao.load_all()
+            employee_logger.info("Employees loaded successfully.")
+        except EmployeeLoadError as e:
+            employee_logger.error(str(e))
+            self.employees = []
+
 
     def register(self, name: str, cpf: str, role: str, login: str, password: str) -> None:
         if self.find(cpf):

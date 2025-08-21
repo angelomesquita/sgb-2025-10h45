@@ -7,6 +7,7 @@ readability throughout the application, following the principle of explicitness.
 
 Hierarchy:
     - EmployeeError (base class for all Employee-related exceptions)
+        - EmployeeLoadError
         - EmployeeAlreadyExistsError
         - EmployeeDeletedError
         - EmployeeNotFoundError
@@ -16,6 +17,11 @@ Hierarchy:
 
 class EmployeeError(Exception):
     """Base class for Employee-related errors."""
+    pass
+
+
+class EmployeeLoadError(Exception):
+    """Raised when there is an error loading employee data from storage."""
     pass
 
 

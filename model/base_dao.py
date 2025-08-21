@@ -1,4 +1,5 @@
 import os
+from model.exceptions import EmployeeLoadError
 from typing import Generic, List, TypeVar
 from abc import ABC, abstractmethod
 
@@ -20,10 +21,13 @@ class BaseDao(ABC, Generic[T]):
             return []
 
         items: List[T] = []
-        with open(cls._FILE_PATH, "r", encoding="utf-8") as file:
-            for line in file:
-                item = cls._deserialize(line.strip())
-                items.append(item)
+        try:
+            with open(cls._FILE_PATH, "r", encoding="utf-8") as file:
+                for line in file:
+                    item = cls._deserialize(line.strip())
+                    items.append(item)
+        except Exception as e:
+            raise EmployeeLoadError(f"Failed to load employees: {e}") from e
 
         return items
 
