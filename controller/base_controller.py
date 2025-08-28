@@ -8,6 +8,7 @@ from model.cpf import Cpf
 T = TypeVar("T")  # Generic type (Employee, Customer, etc...)
 D = TypeVar("D")  # Generic type (DAO)
 
+# TODO: Exceptions.py
 
 class BaseController(ABC, Generic[T]):
 
@@ -75,7 +76,11 @@ class BaseController(ABC, Generic[T]):
                 return item
         return None
 
-    def update(self, cpf: str, **kwargs) -> None:
+    def update(self, *args, **kwargs):
+        cpf = kwargs.get("cpf") or (args[1] if len(args) > 1 else None)
+        self._update_logic(cpf, **kwargs)
+
+    def _update_logic(self, cpf: str, **kwargs) -> None:
         for item in self.items:
             if item.cpf == cpf and not item.deleted:
                 for field, value in kwargs.items():
