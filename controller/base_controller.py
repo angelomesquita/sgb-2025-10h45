@@ -18,8 +18,11 @@ class BaseController(ABC, Generic[T]):
         """Creates a new instance of the object (Customer, Employee, etc...)"""
         pass
 
-    def register(self, *args, **kwargs) -> None:
-        cpf = args[1] if len(args) > 1 else kwargs.get("cpf")
+    def register(self, *args, **kwargs):
+        cpf = kwargs.get("cpf") or (args[1] if len(args) > 1 else None)
+        self._register_logic(cpf, **kwargs)
+
+    def _register_logic(self, cpf: str, **kwargs) -> None:
         if self.find(cpf):
             print('An entry with this CPF is already registered!\n')
             return
@@ -30,10 +33,11 @@ class BaseController(ABC, Generic[T]):
             print('Invalid CPF. Try again.\n')
             return
 
-        if "password" in kwargs and kwargs["password"]:
-            kwargs["password"] = Auth.hash_password(kwargs["password"])
+        if "password" in kwargs:
+            password = kwargs.pop("password")
+            kwargs["password_hash"] = Auth.hash_password(password)
 
-        item = self.create_instance(*args, **kwargs)
+        item = self.create_instance(cpf=cpf, **kwargs)
         self.items.append(item)
         self.dao_class.save_all(self.items)
         print(f'✅ {item.__class__.__name__} successfully registered!\n')
@@ -73,13 +77,13 @@ class BaseController(ABC, Generic[T]):
                 self.dao_class.save_all(self.items)
                 print(f'✅ {item.__class__.__name__} successfully updated!\n')
                 return
-        print(f'✅ {item.__class__.__name__} not found!\n')
+        print(f'Entry not found!\n')
 
     def delete(self, cpf: str) -> None:
         for item in self.items:
             if item.cpf == cpf and item.deleted is not True:
                 item.deleted = True
-                print('Entry successfully deleted!\n')
+                print(f'{item.__class__.__name__} successfully deleted!\n')
                 self.dao_class.save_all(self.items)
                 return
-        print('Entry not found!\n')
+        print(f'Entry not found!\n')
