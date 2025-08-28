@@ -1,6 +1,8 @@
-from typing import Generic, List, Optional, TypeVar
+import logging
+from typing import Generic, List, Optional, Type, TypeVar
 from abc import ABC, abstractmethod
 from model.auth import Auth
+from model.base_dao import BaseDao
 from model.cpf import Cpf
 
 T = TypeVar("T")  # Generic type (Employee, Customer, etc...)
@@ -9,9 +11,17 @@ D = TypeVar("D")  # Generic type (DAO)
 
 class BaseController(ABC, Generic[T]):
 
-    def __init__(self, dao_class: D):
-        self.dao_class = dao_class
-        self.items: List[T] = self.dao_class.load_all()
+    dao_class: Type[BaseDao[T]]
+    logger: logging.Logger = logging.getLogger(__name__)
+
+    def __init__(self):
+        self.items: List[T] = []
+        try:
+            self.items = self.dao_class.load_all()
+            self.logger.info(f"{self.__class__.__name__} loaded successfully.")
+        except Exception as e:
+            self.logger.error(f"{self.__class__.__name__}: Failed to load items - {e}")
+            self.items = []
 
     @abstractmethod
     def create_instance(self, *args, **kwargs) -> T:

@@ -2,12 +2,13 @@ from controller.base_controller import BaseController
 from model.category import Category
 from model.customer import Customer
 from model.customer_dao import CustomerDao
+from model.logger import customer_logger
 
 
 class CustomerController(BaseController[Customer]):
 
-    def __init__(self):
-        super().__init__(CustomerDao)
+    dao_class = CustomerDao
+    logger = customer_logger
 
     def register(self, name: str, cpf: str, contact: str, category: str, password: str) -> None:
         if not Category.validate(category):
@@ -20,4 +21,3 @@ class CustomerController(BaseController[Customer]):
 
     def update(self, name: str, cpf: str, contact: str, category: str, password: str) -> None:
         super().update(cpf, name=name, contact=contact, category=category, password=password)
-
