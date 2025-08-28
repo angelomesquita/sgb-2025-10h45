@@ -65,7 +65,7 @@ class BaseController(ABC, Generic[T]):
         for item in self.items:
             if item.cpf == cpf and not item.deleted:
                 for field, value in kwargs.items():
-                    if value is not None:  # só atualiza quando o campo for fornecido
+                    if value is not None:
                         if field == "password":
                             setattr(item, "password_hash", Auth.hash_password(value))
                         else:
