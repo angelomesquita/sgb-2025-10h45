@@ -36,4 +36,50 @@ class BaseController(ABC, Generic[T]):
         item = self.create_instance(*args, **kwargs)
         self.items.append(item)
         self.dao_class.save_all(self.items)
-        print('✅ Successfully registered!\n')
+        print(f'✅ {item.__class__.__name__} successfully registered!\n')
+
+    def list(self) -> None:
+        if not self.items:
+            print("No entries registered yet.")
+            return
+        active_items = [item for item in self.items if not getattr(item, 'deleted', False)]
+        if not active_items:
+            print("No active entries found.")
+            return
+        for item in active_items:
+            print(item)
+
+    def find(self, cpf: str) -> Optional[T]:
+        for item in self.items:
+            if item.cpf == cpf and item.deleted is not True:
+                return item
+        return None
+
+    def find_deleted(self, cpf: str) -> Optional[T]:
+        for item in self.items:
+            if item.cpf == cpf and getattr(item, 'deleted', False) is True:
+                return item
+        return None
+
+    def update(self, cpf: str, **kwargs) -> None:
+        for item in self.items:
+            if item.cpf == cpf and not item.deleted:
+                for field, value in kwargs.items():
+                    if value is not None:  # só atualiza quando o campo for fornecido
+                        if field == "password":
+                            setattr(item, "password_hash", Auth.hash_password(value))
+                        else:
+                            setattr(item, field, value)
+                self.dao_class.save_all(self.items)
+                print(f'✅ {item.__class__.__name__} successfully updated!\n')
+                return
+        print(f'✅ {item.__class__.__name__} not found!\n')
+
+    def delete(self, cpf: str) -> None:
+        for item in self.items:
+            if item.cpf == cpf and item.deleted is not True:
+                item.deleted = True
+                print('Entry successfully deleted!\n')
+                self.dao_class.save_all(self.items)
+                return
+        print('Entry not found!\n')
