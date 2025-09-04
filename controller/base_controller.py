@@ -8,10 +8,10 @@ from model.cpf import Cpf
 T = TypeVar("T")  # Generic type (Employee, Customer, etc...)
 D = TypeVar("D")  # Generic type (DAO)
 
+
 # TODO: Exceptions.py
 
 class BaseController(ABC, Generic[T]):
-
     dao_class: Type[BaseDao[T]]
     logger: logging.Logger = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ class BaseController(ABC, Generic[T]):
         pass
 
     def register(self, *args, **kwargs):
-        cpf = kwargs.get("cpf") or (args[1] if len(args) > 1 else None)
+        cpf = kwargs.get("cpf") or (args[0] if len(args) == 1 else None)
         self._register_logic(cpf, **kwargs)
 
     def _register_logic(self, cpf: str, **kwargs) -> None:
@@ -51,7 +51,9 @@ class BaseController(ABC, Generic[T]):
         item = self.create_instance(cpf=cpf, **kwargs)
         self.items.append(item)
         self.dao_class.save_all(self.items)
-        print(f'✅ {item.__class__.__name__} successfully registered!\n')
+        message = f'✅ {item.__class__.__name__} successfully registered!\n'
+        self.logger.info(message)
+        print(message)
 
     def list(self) -> None:
         if not self.items:
