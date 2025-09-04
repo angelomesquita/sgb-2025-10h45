@@ -1,1 +1,0 @@
-Funcionario 001 UP|921.434.950-99|Funcionario|f001|$2b$12$pxwMl8LVj3HvN.3YXxgBnucBirpRyyqfF4dLTdYH.o33E1pRdJeIO|True
