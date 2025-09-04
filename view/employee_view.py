@@ -80,7 +80,7 @@ class EmployeeView(View):
     def authenticate(self) -> None:
         print('\n=== Authenticate Employee ===')
         username, password = self.get_auth_data()
-        AuthController.auth(self.controller.employees, username, password)
+        AuthController.auth(self.controller.items, username, password)
         self.press_enter_to_continue()
         self.clear_screen()
 

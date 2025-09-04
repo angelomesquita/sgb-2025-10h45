@@ -1,4 +1,1 @@
-Funcionario 001|415.081.330-26|Funcionario|f.001|b'$2b$12$HcyjBGM0S5Tk0kMhhAngPeniBCb4gNFkR.dgqnuPkqhyJH4NUgnge'|False
-Funcionario 002|808.129.700-63|Funcionario|f.002|b'$2b$12$zGRYR7msWitRVmWyVvA9dOcir0LQa67Jnb/a2GGOfxIZOLejKxHOy'|False
-Funcionario 003|914.052.390-00|Funcionario|f.003|b'$2b$12$r.Cac0pf45BEgMnQkS14N.nlwpmj9L6TuUB7EKhNq4s//y76z7qC6'|False
-Funcionario Hoje|663.678.610-84|Funcionario|f.hoje|b'$2b$12$08U1hWh494WlFZXLfNrMLOcIcNWE9mV0As/md2STiYshwftQPQ/2q'|False
+Funcionario 001|921.434.950-99|Funcionario|f001|$2b$12$YLrnLxFhRZbMA9Y7j1rIvOsi8dXqDYZjEBGG0ul4X0aeOuiJII0gm|False
