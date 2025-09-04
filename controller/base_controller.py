@@ -52,7 +52,7 @@ class BaseController(ABC, Generic[T]):
         self.items.append(item)
         self.dao_class.save_all(self.items)
         message = f'✅ {item.__class__.__name__} successfully registered!\n'
-        self.logger.info(message)
+        self.logger.info(f"{message} [{item}]")
         print(message)
 
     def list(self) -> None:
@@ -79,7 +79,7 @@ class BaseController(ABC, Generic[T]):
         return None
 
     def update(self, *args, **kwargs):
-        cpf = kwargs.get("cpf") or (args[1] if len(args) > 1 else None)
+        cpf = kwargs.get("cpf") or (args[0] if len(args) == 1 else None)
         self._update_logic(cpf, **kwargs)
 
     def _update_logic(self, cpf: str, **kwargs) -> None:
@@ -92,7 +92,9 @@ class BaseController(ABC, Generic[T]):
                         else:
                             setattr(item, field, value)
                 self.dao_class.save_all(self.items)
-                print(f'✅ {item.__class__.__name__} successfully updated!\n')
+                message = f'✅ {item.__class__.__name__} successfully updated!\n'
+                self.logger.info(f"{message} [{item}]")
+                print(message)
                 return
         print(f'Entry not found!\n')
 
@@ -100,7 +102,9 @@ class BaseController(ABC, Generic[T]):
         for item in self.items:
             if item.cpf == cpf and item.deleted is not True:
                 item.deleted = True
-                print(f'{item.__class__.__name__} successfully deleted!\n')
+                message = f'{item.__class__.__name__} successfully deleted!\n'
+                self.logger.info(f"{message} [{item}]")
+                print(message)
                 self.dao_class.save_all(self.items)
                 return
         print(f'Entry not found!\n')
