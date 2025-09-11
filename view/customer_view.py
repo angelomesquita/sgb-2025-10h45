@@ -83,7 +83,8 @@ class CustomerView(View):
         password = getpass('Password: ')
         return name, cpf, contact, category, password
 
-    def get_category_customer(self) -> str:
+    @staticmethod
+    def get_category_customer() -> str:
         print('Choose category: ')
         options = Category.options()
         for i, (value, label) in enumerate(options, start=1):
