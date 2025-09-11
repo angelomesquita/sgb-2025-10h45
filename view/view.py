@@ -14,7 +14,8 @@ class View:
     def press_enter_to_continue() -> None:
         input('Press Enter to continue...')
 
-    def get_cpf(self) -> str:
+    @staticmethod
+    def get_cpf() -> str:
         while True:
             cpf = input('CPF: ')
             if Cpf.validate(cpf):

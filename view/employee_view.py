@@ -15,15 +15,15 @@ class EmployeeView(View):
     def show_menu(self) -> None:
         while True:
             self.clear_screen()
-            print('\n=== Employee Module ===')  # Módulo de Funcionario
-            print('1. Register Employee ')  # Cadastrar Funcionario
-            print('2. List Employees')  # Listar Funcionarios
-            print('3. Authenticate Employee')  # Autenticar Funcionario
-            print('4. Update Employee')  # Atualizar Funcionario
-            print('5. Delete Employee')  # Apagar Funcionario
-            print('0. Back to main menu')  # Voltar para o Menu Principal
+            print('\n=== Employee Module ===')
+            print('1. Register Employee ')
+            print('2. List Employees')
+            print('3. Authenticate Employee')
+            print('4. Update Employee')
+            print('5. Delete Employee')
+            print('0. Back to main menu')
 
-            option = input('Select an option: ')  # Escolha uma opção
+            option = input('Select an option: ')
 
             if option == '1':
                 self.register()
@@ -38,7 +38,7 @@ class EmployeeView(View):
             elif option == '0':
                 break
             else:
-                print(View._MENU_INVALID_OPTION)  # Opção inválida
+                print(View._MENU_INVALID_OPTION)
                 self.press_enter_to_continue()
 
     def register(self) -> None:
@@ -91,7 +91,8 @@ class EmployeeView(View):
         login, password = self.get_auth_data()
         return name, cpf, role, login, password
 
-    def get_auth_data(self) -> Tuple[str, str]:
+    @staticmethod
+    def get_auth_data() -> Tuple[str, str]:
         username = input('Username: ')
         password = getpass('Password: ')
         return username, password
