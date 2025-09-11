@@ -3,6 +3,7 @@ from typing import Tuple
 
 from controller.auth_controller import AuthController
 from controller.employee_controller import EmployeeController
+from validators.employee_validator import EmployeeValidator
 from view.view import View
 
 
@@ -85,14 +86,32 @@ class EmployeeView(View):
         self.clear_screen()
 
     def get_employee_data(self) -> Tuple[str, str, str, str, str]:
-        name = input('Name: ')
+        name = self.get_name()
         cpf = self.get_cpf()
-        role = input('Role: ')
+        role = self.get_role()
         login, password = self.get_auth_data()
         return name, cpf, role, login, password
+
+    @staticmethod
+    def get_name() -> str:
+        while True:
+            name = input('Name: ')
+            if EmployeeValidator.validate_name(name):
+                return name
+            print("❌ Invalid name. Must be at least 3 characters.")
+
+    @staticmethod
+    def get_role() -> str:
+        while True:
+            role = input('Role: ')
+            if EmployeeValidator.validate_role(role):
+                return role
+            print("❌ Invalid role. Cannot be empty.")
 
     @staticmethod
     def get_auth_data() -> Tuple[str, str]:
         username = input('Username: ')
         password = getpass('Password: ')
-        return username, password
+        if EmployeeValidator.validate_username(username) and EmployeeValidator.validate_password(password):
+            return username, password
+        print("❌ Invalid username or password. Username >= 4, Password >=6 characters.")

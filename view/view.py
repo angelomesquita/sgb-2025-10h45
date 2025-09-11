@@ -20,4 +20,4 @@ class View:
             cpf = input('CPF: ')
             if Cpf.validate(cpf):
                 return cpf
-            print('Invalid CPF. Try again.\n')
+            print('❌ Invalid CPF. Try again.\n')
