@@ -3,12 +3,26 @@ from model.category import Category
 from model.customer import Customer
 from model.customer_dao import CustomerDao
 from model.logger import customer_logger
+from model.exceptions import (
+    CustomerAlreadyExistsError,
+    CustomerDeletedError,
+    CustomerNotFoundError,
+    CustomerLoadError,
+    InvalidCpfError
+)
 
 
 class CustomerController(BaseController[Customer]):
 
     dao_class = CustomerDao
     logger = customer_logger
+    key_field = "cpf"
+
+    AlreadyExistsError = CustomerAlreadyExistsError
+    DeleteExistsError = CustomerDeletedError
+    NotFoundError = CustomerNotFoundError
+    LoadError = CustomerLoadError
+    InvalidCpfError: InvalidCpfError
 
     def register(self, name: str, cpf: str, contact: str, category: str, password: str) -> None:
         if not Category.validate(category):
