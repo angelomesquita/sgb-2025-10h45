@@ -1,10 +1,19 @@
 class Publisher:
 
-    def __init__(self, legal_name: str, city: str, state: str, deleted: bool = False):
+    def __init__(self, publisher_id: str, legal_name: str, city: str, state: str, deleted: bool = False):
+        self._publisher_id = publisher_id
         self._legal_name = legal_name
         self._city = city
         self._state = state
         self._deleted = deleted
+
+    @property
+    def publisher_id(self) -> str:
+        return self._publisher_id
+
+    @publisher_id.setter
+    def publisher_id(self, value: str) -> None:
+        self._publisher_id = value
 
     @property
     def legal_name(self) -> str:
@@ -31,4 +40,4 @@ class Publisher:
         self._state = value
 
     def __str__(self):
-        return f'Legal Name: {self.legal_name}, City: {self.city}, State: {self.state}'
+        return f'ID: {self.publisher_id}, Legal Name: {self.legal_name}, City: {self.city}, State: {self.state}'
