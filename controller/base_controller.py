@@ -3,6 +3,7 @@ from typing import Generic, List, Optional, Type, TypeVar
 from abc import ABC, abstractmethod
 from model.auth import Auth
 from model.base_dao import BaseDao
+from model.person import Person
 from model.cpf import Cpf
 
 T = TypeVar("T")  # Generic type (Employee, Customer, etc...)
@@ -14,7 +15,6 @@ D = TypeVar("D")  # Generic type (DAO)
 class BaseController(ABC, Generic[T]):
     dao_class: Type[BaseDao[T]]
     logger: logging.Logger = logging.getLogger(__name__)
-    key_field: str = "cpf"  # default
 
     AlreadyExistsError: Type[Exception] = Exception
     DeleteExistsError: Type[Exception] = Exception
@@ -22,7 +22,9 @@ class BaseController(ABC, Generic[T]):
     LoadError: Type[Exception] = Exception
     InvalidCpfError: Type[Exception] = Exception
 
-    def __init__(self):
+    def __init__(self, model_class: Type[T], key_field: str = 'cpf'):
+        self.model_class = model_class
+        self.key_field = key_field
         self.items: List[T] = []
         try:
             self.items = self.dao_class.load_all()
@@ -54,7 +56,7 @@ class BaseController(ABC, Generic[T]):
                 print(f'Invalid {self.key_field}. Try again.\n')
                 return
 
-        if "password" in kwargs:
+        if issubclass(self.model_class, Person) and "password" in kwargs:
             password = kwargs.pop("password")
             kwargs["password_hash"] = Auth.hash_password(password)
 
