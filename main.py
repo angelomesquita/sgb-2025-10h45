@@ -14,7 +14,7 @@ def main():
             author_view = AuthorView()
             author_view.show_menu()
             View.clear_screen()
-        if option == '2':
+        elif option == '2':
             employee_view = EmployeeView()
             employee_view.show_menu()
             View.clear_screen()
