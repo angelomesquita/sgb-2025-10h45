@@ -95,7 +95,7 @@ class PublisherView(View):
             legal_name = input('Legal Name: ')
             if PublisherValidator.validate_legal_name(legal_name):
                 return legal_name
-            print("❌ Invalid legal name. Must be at least 10 characters.")
+            print("❌ Invalid legal name. Must be at least 5 characters.")
 
     @staticmethod
     def get_city() -> str:
@@ -103,7 +103,7 @@ class PublisherView(View):
             city = input('City: ')
             if PublisherValidator.validate_city(city):
                 return city
-            print("❌ Invalid city. Must be at least 10 characters.")
+            print("❌ Invalid city. Must be at least 5 characters.")
 
     @staticmethod
     def get_state() -> str:
