@@ -5,7 +5,7 @@ class AuthorValidator:
 
     @staticmethod
     def validate_author_id(author_id: str) -> bool:
-        return author_id.isdigit()
+        return Validator.is_numeric(author_id)
 
     @staticmethod
     def validate_name(name: str) -> bool:
