@@ -76,7 +76,7 @@ class PublisherView(View):
 
     def get_publisher_data(self) -> Tuple[str, str, str, str]:
         publisher_id = self.get_publisher_id()
-        legal_name = self.get_city()
+        legal_name = self.get_legal_name()
         city = self.get_city()
         state = self.get_state()
         return publisher_id, legal_name, city, state
