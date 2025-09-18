@@ -15,13 +15,15 @@ class EmployeeController(BaseController[Employee]):
 
     dao_class = EmployeeDao
     logger = employee_logger
-    key_field = "cpf"
 
     AlreadyExistsError = EmployeeAlreadyExistsError
     DeleteExistsError = EmployeeDeletedError
     NotFoundError = EmployeeNotFoundError
     LoadError = EmployeeLoadError
     InvalidCpfError: InvalidCpfError
+
+    def __init__(self):
+        super().__init__(model_class=Employee)
 
     def register(self, name: str, cpf: str, role: str, login: str, password: str) -> None:
         super().register(cpf, name=name, role=role, login=login, password=password)

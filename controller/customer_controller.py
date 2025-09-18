@@ -16,13 +16,15 @@ class CustomerController(BaseController[Customer]):
 
     dao_class = CustomerDao
     logger = customer_logger
-    key_field = "cpf"
 
     AlreadyExistsError = CustomerAlreadyExistsError
     DeleteExistsError = CustomerDeletedError
     NotFoundError = CustomerNotFoundError
     LoadError = CustomerLoadError
     InvalidCpfError: InvalidCpfError
+
+    def __init__(self):
+        super().__init__(model_class=Customer)
 
     def register(self, name: str, cpf: str, contact: str, category: str, password: str) -> None:
         if not Category.validate(category):
