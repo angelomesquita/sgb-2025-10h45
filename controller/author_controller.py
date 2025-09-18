@@ -23,11 +23,11 @@ class AuthorController(BaseController[Author]):
     def __init__(self):
         super().__init__(model_class=Author, key_field="author_id")
 
-    def register(self, author_id: int, name: str) -> None:
+    def register(self, author_id: str, name: str) -> None:
         super().register(author_id, name=name)
 
-    def create_instance(self, author_id: int, name: str, deleted: bool = False) -> Author:
+    def create_instance(self, author_id: str, name: str, deleted: bool = False) -> Author:
         return Author(author_id, name, deleted)
 
-    def update(self, author_id: int, name: str) -> None:
+    def update(self, author_id: str, name: str) -> None:
         super().update(author_id, name=name)
