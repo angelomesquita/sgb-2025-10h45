@@ -1,6 +1,7 @@
 from view.author_view import AuthorView
 from view.customer_view import CustomerView
 from view.employee_view import EmployeeView
+from view.publisher_view import PublisherView
 from view.view import View
 
 
@@ -22,6 +23,10 @@ def main():
             customer_view = CustomerView()
             customer_view.show_menu()
             View.clear_screen()
+        elif option == '4':
+            publisher_view = PublisherView()
+            publisher_view.show_menu()
+            View.clear_screen()
         elif option == '0':
             print('Exiting the system...')
             break
@@ -36,6 +41,7 @@ def show_app_menu():
     print('1. Author Module')
     print('2. Employee Module')
     print('3. Customer Module')
+    print('4. Publisher Module')
     print('0. Exit')
 
 
