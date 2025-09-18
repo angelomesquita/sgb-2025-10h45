@@ -1,0 +1,96 @@
+from typing import Tuple
+
+from controller.author_controller import AuthorController
+from validators.author_validator import AuthorValidator
+from view.view import View
+
+
+class AuthorView(View):
+
+    __NOT_FOUND = 'Author not found!\n'
+
+    def __init__(self):
+        self.controller = AuthorController()
+
+    def show_menu(self) -> None:
+        while True:
+            self.clear_screen()
+            print('\n=== Author Module ===')
+            print('1. Register Author ')
+            print('2. List Authors ')
+            print('3. Update Author')
+            print('4. Delete Author')
+            print('0. Back to main menu')
+
+            option = input('Select an option: ')
+
+            if option == '1':
+                self.register()
+            elif option == '2':
+                self.list()
+            elif option == '3':
+                self.update()
+            elif option == '4':
+                self.delete()
+            elif option == '0':
+                break
+            else:
+                print(View._MENU_INVALID_OPTION)
+                self.press_enter_to_continue()
+
+    def register(self) -> None:
+        print('\n=== Register Author ===')
+        data = self.get_author_data()
+        self.controller.register(*data)
+        self.press_enter_to_continue()
+        self.clear_screen()
+
+    def list(self) -> None:
+        print('\n=== List Authors ===')
+        self.controller.list()
+        self.press_enter_to_continue()
+        self.clear_screen()
+
+    def update(self) -> None:
+        print('\n=== Update Author ===')
+        author_id = self.get_author_id()
+        author = self.controller.find(author_id)
+        if author:
+            data = self.get_author_data()
+            self.controller.update(*data)
+        else:
+            print(self.__NOT_FOUND)
+        self.press_enter_to_continue()
+        self.clear_screen()
+
+    def delete(self) -> None:
+        print('\n=== Delete Author ===')
+        author_id = self.get_author_id()
+        author = self.controller.find(author_id)
+        if author:
+            self.controller.delete(author_id)
+        else:
+            print(self.__NOT_FOUND)
+        self.press_enter_to_continue()
+        self.clear_screen()
+
+    def get_author_data(self) -> Tuple[str, str]:
+        author_id = self.get_author_id()
+        name = self.get_name()
+        return author_id, name
+
+    @staticmethod
+    def get_author_id() -> str:
+        while True:
+            author_id = input('Author ID: ')
+            if AuthorValidator.validate_author_id(author_id):
+                return author_id
+            print("❌ Invalid author_id. Please enter an integer.")
+
+    @staticmethod
+    def get_name() -> str:
+        while True:
+            name = input('Name: ')
+            if AuthorValidator.validate_name(name):
+                return name
+            print("❌ Invalid name. Must be at least 3 characters.")
