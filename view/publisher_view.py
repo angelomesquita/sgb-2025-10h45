@@ -19,7 +19,7 @@ class PublisherView(View):
             print('1. Register Publisher ')
             print('2. List Publishers ')
             print('3. Update Publisher')
-            print('4. Delete Author')
+            print('4. Delete Publisher')
             print('0. Back to main menu')
 
             option = input('Select an option: ')
