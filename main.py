@@ -1,3 +1,4 @@
+from view.author_view import AuthorView
 from view.customer_view import CustomerView
 from view.employee_view import EmployeeView
 from view.view import View
@@ -10,10 +11,14 @@ def main():
         option = input('Select an option: ')
 
         if option == '1':
+            author_view = AuthorView()
+            author_view.show_menu()
+            View.clear_screen()
+        if option == '2':
             employee_view = EmployeeView()
             employee_view.show_menu()
             View.clear_screen()
-        elif option == '2':
+        elif option == '3':
             customer_view = CustomerView()
             customer_view.show_menu()
             View.clear_screen()
@@ -28,8 +33,9 @@ def main():
 
 def show_app_menu():
     print('\n=== Library Management System ===')
-    print('1. Employee Module')
-    print('2. Customer Module')
+    print('1. Author Module')
+    print('2. Employee Module')
+    print('3. Customer Module')
     print('0. Exit')
 
 
