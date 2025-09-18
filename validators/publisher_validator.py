@@ -1,0 +1,20 @@
+from validators.validator import Validator
+
+
+class PublisherValidator:
+
+    @staticmethod
+    def validate_publisher_id(publisher_id: str) -> bool:
+        return publisher_id.isdigit()
+
+    @staticmethod
+    def validate_legal_name(legal_name: str) -> bool:
+        return Validator.min_length(legal_name, 10)
+
+    @staticmethod
+    def validate_city(city: str) -> bool:
+        return Validator.min_length(city, 10)
+
+    @staticmethod
+    def validate_state(state: str) -> bool:
+        return Validator.min_length(state, 2)
