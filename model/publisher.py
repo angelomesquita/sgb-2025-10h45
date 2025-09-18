@@ -39,5 +39,13 @@ class Publisher:
     def state(self, value: str) -> None:
         self._state = value
 
+    @property
+    def deleted(self) -> bool:
+        return self._deleted
+
+    @deleted.setter
+    def deleted(self, value: bool) -> None:
+        self._deleted = value
+
     def __str__(self):
         return f'ID: {self.publisher_id}, Legal Name: {self.legal_name}, City: {self.city}, State: {self.state}'
