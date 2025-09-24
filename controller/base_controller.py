@@ -121,6 +121,17 @@ class BaseController(ABC, Generic[T]):
                 return
         self._entry_not_found()
 
+    def restore(self, key_value: str) -> None:
+        for item in self.items:
+            if getattr(item, self.key_field) == key_value and item.deleted is True:
+                item.deleted = False
+                self.dao_class.save_all(self.items)
+                message = f'{item.__class__.__name__} successfully restored!\n'
+                self.logger.info(f"{message} [{item}]")
+                print(message)
+                return
+        self._entry_not_found()
+
     def _get_key_value(self, item: T) -> str:
         return getattr(item, self.key_field)
 
