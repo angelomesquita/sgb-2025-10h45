@@ -20,6 +20,7 @@ class AuthorView(View):
             print('2. List Authors ')
             print('3. Update Author')
             print('4. Delete Author')
+            print('5. Restore Author')
             print('0. Back to main menu')
 
             option = input('Select an option: ')
@@ -32,6 +33,8 @@ class AuthorView(View):
                 self.update()
             elif option == '4':
                 self.delete()
+            elif option == '5':
+                self.restore()
             elif option == '0':
                 break
             else:
@@ -69,6 +72,17 @@ class AuthorView(View):
         author = self.controller.find(author_id)
         if author:
             self.controller.delete(author_id)
+        else:
+            print(self.__NOT_FOUND)
+        self.press_enter_to_continue()
+        self.clear_screen()
+
+    def restore(self) -> None:
+        print('\n=== Restore Author ===')
+        author_id = self.get_author_id()
+        author = self.controller.find_deleted(author_id)
+        if author:
+            self.controller.restore(author_id)
         else:
             print(self.__NOT_FOUND)
         self.press_enter_to_continue()
