@@ -21,6 +21,7 @@ class BookView(View):
             print('2. List Books ')
             print('3. Update Book')
             print('4. Delete Book')
+            print('5. Restore Book')
             print('0. Back to main menu')
 
             option = input('Select an option: ')
@@ -33,6 +34,8 @@ class BookView(View):
                 self.update()
             elif option == '4':
                 self.delete()
+            elif option == '5':
+                self.restore()
             elif option == '0':
                 break
             else:
@@ -70,6 +73,17 @@ class BookView(View):
         book = self.controller.find(isbn)
         if book:
             self.controller.delete(isbn)
+        else:
+            print(self.__NOT_FOUND)
+        self.press_enter_to_continue()
+        self.clear_screen()
+
+    def restore(self) -> None:
+        print('\n=== Restore Book ===')
+        isbn = self.get_isbn()
+        book = self.controller.find_deleted(isbn)
+        if book:
+            self.controller.restore(isbn)
         else:
             print(self.__NOT_FOUND)
         self.press_enter_to_continue()
