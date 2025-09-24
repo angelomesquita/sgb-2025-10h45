@@ -18,3 +18,8 @@ class AuthorService:
         if author is None:
             raise AuthorNotFoundError(f"Author with ID {author_id} not found.")
         return author
+
+    @staticmethod
+    def options() -> List[Tuple[str, str]]:
+        authors = AuthorService._get_all_authors()
+        return [(str(a.author_id), a.name) for a in authors if not a.deleted]

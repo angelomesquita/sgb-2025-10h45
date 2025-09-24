@@ -18,3 +18,8 @@ class PublisherService:
         if publisher is None:
             raise PublisherNotFoundError(f"Publisher with ID {publisher_id} not found.")
         return publisher
+
+    @staticmethod
+    def options() -> List[Tuple[str, str]]:
+        publishers = PublisherService._get_all_publishers()
+        return [(str(p.publisher_id), p.legal_name) for p in publishers if not p.deleted]
