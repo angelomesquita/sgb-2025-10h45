@@ -17,14 +17,15 @@ class CustomerView(View):
     def show_menu(self) -> None:
         while True:
             self.clear_screen()
-            print('\n=== Customer Module ===')  # Módulo de Usuário
+            print('\n=== Customer Module ===')
             print('1. Register Customer ')
             print('2. List Customers ')
-            print('3. Update Customer')  # Atualizar Usuário
-            print('4. Delete Customer')  # Apagar Usuário
-            print('0. Back to main menu')  # Voltar para o Menu Principal
+            print('3. Update Customer')
+            print('4. Delete Customer')
+            print('5. Restore Customer')
+            print('0. Back to main menu')
 
-            option = input('Select an option: ')  # Escolha uma opção
+            option = input('Select an option: ')
 
             if option == '1':
                 self.register()
@@ -34,10 +35,12 @@ class CustomerView(View):
                 self.update()
             elif option == '4':
                 self.delete()
+            elif option == '5':
+                self.restore()
             elif option == '0':
                 break
             else:
-                print(View._MENU_INVALID_OPTION)  # Opção inválida
+                print(View._MENU_INVALID_OPTION)
                 self.press_enter_to_continue()
 
     def register(self) -> None:
@@ -71,6 +74,17 @@ class CustomerView(View):
         customer = self.controller.find(cpf)
         if customer:
             self.controller.delete(cpf)
+        else:
+            print(self.__CUSTOMER_NOT_FOUND)
+        self.press_enter_to_continue()
+        self.clear_screen()
+
+    def restore(self) -> None:
+        print('\n=== Restore Customer ===')
+        cpf = self.get_cpf()
+        customer = self.controller.find_deleted(cpf)
+        if customer:
+            self.controller.restore(cpf)
         else:
             print(self.__CUSTOMER_NOT_FOUND)
         self.press_enter_to_continue()
