@@ -20,6 +20,7 @@ class PublisherView(View):
             print('2. List Publishers ')
             print('3. Update Publisher')
             print('4. Delete Publisher')
+            print('5. Restore Publisher')
             print('0. Back to main menu')
 
             option = input('Select an option: ')
@@ -32,6 +33,8 @@ class PublisherView(View):
                 self.update()
             elif option == '4':
                 self.delete()
+            elif option == '5':
+                self.restore()
             elif option == '0':
                 break
             else:
@@ -69,6 +72,17 @@ class PublisherView(View):
         publisher = self.controller.find(publisher_id)
         if publisher:
             self.controller.delete(publisher_id)
+        else:
+            print(self.__NOT_FOUND)
+        self.press_enter_to_continue()
+        self.clear_screen()
+
+    def restore(self) -> None:
+        print('\n=== Restore Publisher ===')
+        publisher_id = self.get_publisher_id()
+        publisher = self.controller.find_deleted(publisher_id)
+        if publisher:
+            self.controller.restore(publisher_id)
         else:
             print(self.__NOT_FOUND)
         self.press_enter_to_continue()
