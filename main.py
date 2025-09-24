@@ -45,9 +45,9 @@ def show_app_menu():
     print('\n=== Library Management System ===')
     print('1. Author Module')
     print('2. Book Module')
-    print('2. Employee Module')
-    print('3. Customer Module')
-    print('4. Publisher Module')
+    print('3. Employee Module')
+    print('4. Customer Module')
+    print('5. Publisher Module')
     print('0. Exit')
 
 
