@@ -22,6 +22,7 @@ class EmployeeView(View):
             print('3. Authenticate Employee')
             print('4. Update Employee')
             print('5. Delete Employee')
+            print('5. Restore Employee')
             print('0. Back to main menu')
 
             option = input('Select an option: ')
@@ -36,6 +37,8 @@ class EmployeeView(View):
                 self.update()
             elif option == '5':
                 self.delete()
+            elif option == '6':
+                self.restore()
             elif option == '0':
                 break
             else:
@@ -73,6 +76,17 @@ class EmployeeView(View):
         employee = self.controller.find(cpf)
         if employee:
             self.controller.delete(cpf)
+        else:
+            print(self.__EMPLOYEE_NOT_FOUND)
+        self.press_enter_to_continue()
+        self.clear_screen()
+
+    def restore(self) -> None:
+        print('\n=== Restore Employee ===')
+        cpf = self.get_cpf()
+        employee = self.controller.find_deleted(cpf)
+        if employee:
+            self.controller.restore(cpf)
         else:
             print(self.__EMPLOYEE_NOT_FOUND)
         self.press_enter_to_continue()
