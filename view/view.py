@@ -1,4 +1,5 @@
 import os
+from typing import Dict
 from model.cpf import Cpf
 
 
@@ -21,3 +22,16 @@ class View:
             if Cpf.validate(cpf):
                 return cpf
             print('❌ Invalid CPF. Try again.\n')
+
+    @staticmethod
+    def run_action(menu_actions: Dict, option: str) -> bool:
+        action = menu_actions.get(option)
+
+        if not action:
+            print(View._MENU_INVALID_OPTION)
+            View.press_enter_to_continue()
+            return True
+
+        result = action()
+        return result != 'exit'
+
