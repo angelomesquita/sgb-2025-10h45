@@ -16,6 +16,7 @@ class BookView(View):
     def show_menu(self) -> None:
         while True:
             self.clear_screen()
+
             print('\n=== Book Module ===')
             print('1. Register Book ')
             print('2. List Books ')
@@ -26,21 +27,16 @@ class BookView(View):
 
             option = input('Select an option: ')
 
-            if option == '1':
-                self.register()
-            elif option == '2':
-                self.list()
-            elif option == '3':
-                self.update()
-            elif option == '4':
-                self.delete()
-            elif option == '5':
-                self.restore()
-            elif option == '0':
+            menu_actions = {
+                '1': self.register,
+                '2': self.list,
+                '3': self.update,
+                '4': self.delete,
+                '5': self.restore,
+                '0': lambda: 'exit'
+            }
+            if not self.run_action(menu_actions, option):
                 break
-            else:
-                print(View._MENU_INVALID_OPTION)
-                self.press_enter_to_continue()
 
     def register(self) -> None:
         print('\n=== Register Book ===')

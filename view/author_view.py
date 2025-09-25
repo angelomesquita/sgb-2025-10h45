@@ -6,7 +6,6 @@ from view.view import View
 
 
 class AuthorView(View):
-
     __NOT_FOUND = 'Author not found!\n'
 
     def __init__(self):
@@ -15,6 +14,7 @@ class AuthorView(View):
     def show_menu(self) -> None:
         while True:
             self.clear_screen()
+
             print('\n=== Author Module ===')
             print('1. Register Author ')
             print('2. List Authors ')
@@ -22,24 +22,18 @@ class AuthorView(View):
             print('4. Delete Author')
             print('5. Restore Author')
             print('0. Back to main menu')
-
             option = input('Select an option: ')
 
-            if option == '1':
-                self.register()
-            elif option == '2':
-                self.list()
-            elif option == '3':
-                self.update()
-            elif option == '4':
-                self.delete()
-            elif option == '5':
-                self.restore()
-            elif option == '0':
+            menu_actions = {
+                '1': self.register,
+                '2': self.list,
+                '3': self.update,
+                '4': self.delete,
+                '5': self.restore,
+                '0': lambda: 'exit'
+            }
+            if not self.run_action(menu_actions, option):
                 break
-            else:
-                print(View._MENU_INVALID_OPTION)
-                self.press_enter_to_continue()
 
     def register(self) -> None:
         print('\n=== Register Author ===')
