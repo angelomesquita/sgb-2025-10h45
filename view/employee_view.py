@@ -22,7 +22,7 @@ class EmployeeView(View):
             print('3. Authenticate Employee')
             print('4. Update Employee')
             print('5. Delete Employee')
-            print('5. Restore Employee')
+            print('6. Restore Employee')
             print('0. Back to main menu')
 
             option = input('Select an option: ')
