@@ -1,8 +1,8 @@
 from typing import Tuple
 
 from controller.book_controller import BookController
-from services.author_service import AuthorService
-from services.publisher_service import PublisherService
+from repository.author_repository import AuthorRepository
+from repository.publisher_repository import PublisherRepository
 from validators.book_validator import BookValidator
 from view.view import View
 
@@ -127,7 +127,7 @@ class BookView(View):
     @staticmethod
     def get_author_id() -> str:
         print('Choose author_id: ')
-        options = AuthorService.options()
+        options = AuthorRepository.options()
         for i, (value, label) in enumerate(options, start=1):
             print(f"{i}. {label}")
         while True:
@@ -138,7 +138,7 @@ class BookView(View):
     @staticmethod
     def get_publisher_id() -> str:
         print('Choose publisher_id: ')
-        options = PublisherService.options()
+        options = PublisherRepository.options()
         for i, (value, label) in enumerate(options, start=1):
             print(f"{i}. {label}")
         while True:
