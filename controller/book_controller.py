@@ -9,6 +9,7 @@ from model.exceptions import (
     BookLoadError
 )
 from repository.author_repository import AuthorRepository
+from repository.book_repository import BookRepository
 from repository.publisher_repository import PublisherRepository
 
 
@@ -47,3 +48,15 @@ class BookController(BaseController[Book]):
         message = f'✅ {book.__class__.__name__} quantity updated. New Quantity: {book.quantity}'
         self.logger.info(f"{message} [{book}]")
         print(message)
+
+    def search_books(self, title: str, author: str, available: bool) -> None:
+        results = BookRepository.search(title=title, author=author, available=available)
+        if not results:
+            message = f"No books found with the given filters: {title}, {author}, {available} "
+            self.logger.info(f"{message}")
+            print(message)
+            return
+        print(f'Found {len(results)} book(s):')
+        for book in results:
+            print(book)
+        print()
