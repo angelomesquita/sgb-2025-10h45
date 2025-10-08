@@ -24,6 +24,7 @@ class BookView(View):
             print('4. Delete Book')
             print('5. Restore Book')
             print('6. Adjust Quantity')
+            print('7. Search Books')
             print('0. Back to main menu')
 
             option = input('Select an option: ')
@@ -35,6 +36,7 @@ class BookView(View):
                 '4': self.delete,
                 '5': self.restore,
                 '6': self.adjust_quantity,
+                '7': self.search_books,
                 '0': lambda: 'exit'
             }
             if not self.run_action(menu_actions, option):
@@ -96,6 +98,15 @@ class BookView(View):
             self.controller.adjust_quantity(isbn, amount)
         else:
             print(self.__NOT_FOUND)
+        self.press_enter_to_continue()
+        self.clear_screen()
+
+    def search_books(self):
+        print("\n=== Search Books ===")
+        title = self.get_search_title()
+        author = self.get_search_author()
+        available = self.get_search_available()
+        self.controller.search_books(title, author, available)
         self.press_enter_to_continue()
         self.clear_screen()
 
@@ -169,3 +180,23 @@ class BookView(View):
             if BookValidator.validate_amount(amount):
                 return amount
             print("❌ Invalid amount. Must be a integer number.")
+
+    @staticmethod
+    def get_search_title() -> str:
+        return input("Enter title (or leave blank): ").strip()
+
+    @staticmethod
+    def get_search_author() -> str:
+        return input("Enter author name (or leave blank): ").strip()
+
+    @staticmethod
+    def get_search_available() -> bool:
+        while True:
+            available_input = input("Available only? (y/n/blank): ").strip().lower()
+            if available_input == 'y':
+                available = True
+            elif available_input == 'n':
+                available = False
+            else:
+                available = None
+            return available
