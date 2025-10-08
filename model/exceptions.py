@@ -189,6 +189,21 @@ class BorrowError(AppError):
     pass
 
 
+class BorrowAlreadyExistsError(BorrowError):
+    """Raised when trying to register a borrow with an existing ID."""
+    pass
+
+
+class BorrowDeletedError(BorrowError):
+    """Raised when trying to register/update a deleted borrow."""
+    pass
+
+
+class BorrowNotFoundError(BorrowError):
+    """Raised when borrow cannot be found."""
+    pass
+
+
 class BookNotAvailableError(BorrowError):
     """Raised when book is not available for borrow."""
     pass
