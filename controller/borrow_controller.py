@@ -5,6 +5,7 @@ from model.borrow import Borrow
 from model.borrow_dao import BorrowDao
 from model.logger import borrow_logger
 from model.exceptions import (
+    BookNotAvailableError,
     BorrowAlreadyExistsError,
     BorrowDeletedError,
     BorrowNotFoundError,
@@ -31,7 +32,12 @@ class BorrowController(BaseController[Borrow]):
         super().__init__(model_class=Borrow, key_field="borrow_id")
 
     def register(self, borrow_id: str, book_isbn: str, employee_cpf: str, customer_cpf: str) -> None:
-        super().register(borrow_id, book_isbn=book_isbn, employee_cpf=employee_cpf, customer_cpf=customer_cpf)
+        try:
+            BookRepository.decrease_quantity(book_isbn=book_isbn)
+            super().register(borrow_id, book_isbn=book_isbn, employee_cpf=employee_cpf, customer_cpf=customer_cpf)
+        except BookNotAvailableError as e:
+            self.logger.error(str(e))
+            print(f"⚠️Cannot register borrow: {e}")
 
     def create_instance(
             self,
@@ -49,7 +55,7 @@ class BorrowController(BaseController[Borrow]):
         start_date = date.today()
         due_date = start_date + timedelta(days=self._BORROW_DAYS)
 
-        borrow = Borrow(
+        return Borrow(
             borrow_id,
             book,
             employee,
@@ -59,10 +65,6 @@ class BorrowController(BaseController[Borrow]):
             return_date,
             returned
         )
-
-        BookRepository.decrease_quantity(book_isbn=book_isbn)
-
-        return borrow
 
     def update(
         self,
