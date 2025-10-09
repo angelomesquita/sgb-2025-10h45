@@ -89,7 +89,7 @@ class Borrow:
         return self._deleted
 
     @deleted.setter
-    def deleted(self, value: str) -> None:
+    def deleted(self, value: bool) -> None:
         self._deleted = value
 
     def __str__(self):
