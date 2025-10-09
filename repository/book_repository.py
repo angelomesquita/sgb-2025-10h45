@@ -45,10 +45,12 @@ class BookRepository:
     def decrease_quantity(book_isbn: str, amount: int = 1) -> None:
         books = BookRepository.get_all_books()
         for book in books:
+            quantity = int(book.quantity)
             if book.isbn == book_isbn:
-                if book.quantity - amount < 0:
+                if quantity - amount < 0:
                     raise BookNotAvailableError(f"Book '{book.title}' is out of stock.")
-                book.quantity -= amount
+                quantity -= amount
+                book.quantity = quantity
                 break
         BookDao.save_all(books)
 
