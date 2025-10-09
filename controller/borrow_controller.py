@@ -49,7 +49,7 @@ class BorrowController(BaseController[Borrow]):
         start_date = date.today()
         due_date = start_date + timedelta(days=self._BORROW_DAYS)
 
-        return Borrow(
+        borrow = Borrow(
             borrow_id,
             book,
             employee,
@@ -59,6 +59,10 @@ class BorrowController(BaseController[Borrow]):
             return_date,
             returned
         )
+
+        BookRepository.decrease_quantity(book_isbn=book_isbn)
+
+        return borrow
 
     def update(
         self,
