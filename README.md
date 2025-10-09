@@ -28,7 +28,9 @@ Desenvolver um sistema de gerenciamento para bibliteoca escolar utilizando os co
 ## ✅ Requisitos Implementados
 - [X] RF001 - Cadastro de Funcionários: Permitir o registro de funcionários responsáveis pela biblioteca com dados como nome, CPF, cargo e login de acesso e senha.
 - [X] RF002 - Possibilitar o cadastro de usuários da biblioteca com nome, CPF, contato e categoria (exemplo: estudante, professor, visitante)
-- [ ] RF003 - Cadastro de Livros: Registrar os livros no sistema com informações como título, autor, editora, ano de publicação, ISBN e quantidade disponível.
+- [X] RF003 - Cadastro de Livros: Registrar os livros no sistema com informações como título, autor, editora, ano de publicação, ISBN e quantidade disponível.
+- [X] RF004 - Consulta e Pesquisa de Livros: Permitir busca por livros com filtros como título, autor e disponibilidade.
+- [ ] RF005 - Registrar o empréstimo de um livro, vinculando-o a um usuário e a uma data de retirada e devolução prevista.
 
 ## 📝 Como executar
 ```bash
