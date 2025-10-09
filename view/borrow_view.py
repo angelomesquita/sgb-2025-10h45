@@ -90,6 +90,8 @@ class BorrowView(View):
     def return_books(self) -> None:
         print('\n=== Return Books ===')
         # TODO: not implemented yet.
+        self.press_enter_to_continue()
+        self.clear_screen()
 
     def get_borrowing_data(self) -> Tuple[str, str, str, str]:
         borrow_id = self.get_borrow_id()
