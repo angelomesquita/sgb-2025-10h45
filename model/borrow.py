@@ -15,7 +15,8 @@ class Borrow:
             start_date: date,
             due_date: date,
             return_date: date = None,
-            returned: bool = False
+            returned: bool = False,
+            deleted: bool = False
     ) -> None:
         self._borrow_id = borrow_id
         self._book = book
@@ -25,6 +26,7 @@ class Borrow:
         self._due_date = due_date
         self._return_date = return_date
         self._returned = returned
+        self._deleted = deleted
 
     @property
     def borrow_id(self) -> str:
@@ -65,6 +67,14 @@ class Borrow:
     @returned.setter
     def returned(self, value: book) -> None:
         self._returned = value
+
+    @property
+    def deleted(self) -> bool:
+        return self._deleted
+
+    @deleted.setter
+    def deleted(self, value: str) -> None:
+        self._deleted = value
 
     def __str__(self):
         return f"Borrow: {self.borrow_id} | Book: {self.book.title} | Employee: {self.employee.name} | Customer: {self.customer.name} | Start: {self.start_date} | Due: {self.due_date} | Return: {self.return_date} | Returned: {self.returned}"
