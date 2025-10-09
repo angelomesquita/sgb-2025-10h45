@@ -46,7 +46,8 @@ class BorrowController(BaseController[Borrow]):
             employee_cpf: str,
             customer_cpf: str,
             return_date: date = None,
-            returned: bool = False
+            returned: bool = False,
+            deleted: bool = False
     ) -> Borrow:
 
         book = BookRepository.get_book_by_isbn(book_isbn)
@@ -63,7 +64,8 @@ class BorrowController(BaseController[Borrow]):
             start_date,
             due_date,
             return_date,
-            returned
+            returned,
+            deleted
         )
 
     def update(
