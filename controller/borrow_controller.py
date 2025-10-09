@@ -74,8 +74,6 @@ class BorrowController(BaseController[Borrow]):
         book_isbn: str,
         employee_cpf: str,
         customer_cpf: str,
-        start_date: date,
-        due_date: date,
         return_date: date = None,
         returned: bool = False
     ) -> None:
@@ -88,8 +86,6 @@ class BorrowController(BaseController[Borrow]):
             book=book,
             employee=employee,
             customer=customer,
-            start_date=start_date,
-            due_date=due_date,
             return_date=return_date,
             returned=returned
         )
