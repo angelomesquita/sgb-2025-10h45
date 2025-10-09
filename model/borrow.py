@@ -65,7 +65,7 @@ class Borrow:
         return self._returned
 
     @returned.setter
-    def returned(self, value: book) -> None:
+    def returned(self, value: bool) -> None:
         self._returned = value
 
     @property
