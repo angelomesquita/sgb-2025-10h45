@@ -1,5 +1,6 @@
 from view.author_view import AuthorView
 from view.book_view import BookView
+from view.borrow_view import BorrowView
 from view.customer_view import CustomerView
 from view.employee_view import EmployeeView
 from view.publisher_view import PublisherView
@@ -21,14 +22,18 @@ def main():
             book_view.show_menu()
             View.clear_screen()
         elif option == '3':
+            borrow_view = BorrowView()
+            borrow_view.show_menu()
+            View.clear_screen()
+        elif option == '4':
             employee_view = EmployeeView()
             employee_view.show_menu()
             View.clear_screen()
-        elif option == '4':
+        elif option == '5':
             customer_view = CustomerView()
             customer_view.show_menu()
             View.clear_screen()
-        elif option == '5':
+        elif option == '6':
             publisher_view = PublisherView()
             publisher_view.show_menu()
             View.clear_screen()
@@ -45,9 +50,10 @@ def show_app_menu():
     print('\n=== Library Management System ===')
     print('1. Author Module')
     print('2. Book Module')
-    print('3. Employee Module')
-    print('4. Customer Module')
-    print('5. Publisher Module')
+    print('3. Borrow Module')
+    print('4. Employee Module')
+    print('5. Customer Module')
+    print('6. Publisher Module')
     print('0. Exit')
 
 
