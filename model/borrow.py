@@ -32,17 +32,33 @@ class Borrow:
     def borrow_id(self) -> str:
         return self._borrow_id
 
+    @borrow_id.setter
+    def borrow_id(self, value: str) -> None:
+        self._borrow_id = value
+
     @property
     def book(self) -> Book:
         return self._book
+
+    @book.setter
+    def book(self, value: Book) -> None:
+        self._book = value
 
     @property
     def employee(self) -> Employee:
         return self._employee
 
+    @employee.setter
+    def employee(self, value: Employee) -> None:
+        self._employee = value
+
     @property
     def customer(self) -> Customer:
         return self._customer
+
+    @customer.setter
+    def customer(self, value: Customer) -> Customer:
+        self._customer = value
 
     @property
     def start_date(self) -> date:
