@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 
-from view.author_view import AuthorView
 from view.book_view import BookView
 from view.borrow_view import BorrowView
 from view.customer_view import CustomerView
@@ -53,7 +52,8 @@ class LibraryApp(tk.Tk):
         ttk.Button(self, text="Exit", command=self.confirm_exit, width=30).pack(pady=(5, 20))
 
     def open_author_module(self):
-        self._open_module_window("Author Module", AuthorView)
+        from view.author_module import AuthorModule
+        AuthorModule(self)
 
     def open_book_module(self):
         self._open_module_window("Book Module", BookView)
