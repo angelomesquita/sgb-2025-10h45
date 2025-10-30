@@ -31,3 +31,6 @@ class AuthorController(BaseController[Author]):
 
     def update(self, author_id: str, name: str) -> None:
         super().update(author_id, name=name)
+
+    # TODO: def delete(self, author_id: str) -> None
+    # TODO: search book_repository if exists book with this author
