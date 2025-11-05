@@ -15,6 +15,4 @@ class Auth:
 
     @staticmethod
     def auth(employee: Employee, username: str, password: str) -> bool:
-        if employee.username == username and Auth.verify_password(password, employee.password_hash):
-            return True
-        return False
+        return employee.username == username and Auth.verify_password(password, employee.password_hash)
