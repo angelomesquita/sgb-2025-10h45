@@ -1,68 +1,89 @@
 import bcrypt
+import pytest
+
 from model.auth import Auth
 from unittest.mock import Mock
 
 
-def test_hash_password_creates_valid_hash():
-    """Ensure hash_password method returns a valid bcrypt hash and is not equal to the original password."""
-    password = "123"
-    hashed = Auth.hash_password(password=password)
+@pytest.fixture
+def credentials():
+    """
+    Fixture that provides basic authentication credentials for the tests.
+
+    Returns:
+        dict: A dictionary containing:
+            - 'username' (str): valid username
+            - 'password' (str): plain text password
+            - 'hashed' (str): bcrypt hash generated from the password
+    """
+    username = 'admin'
+    password = '123'
+    hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    return {'username': username, 'password': password, 'hashed': hashed}
+
+
+def test_hash_password_creates_valid_hash(credentials):
+    """
+    Ensure that the hash_password() method creates a valid bcrypt hash
+    that is not equal to the original password.
+
+    Scenario:
+        - Uses the password provided by the `credentials` fixture.
+        - Verifies that the generated hash is a string, different from
+          the plain password, and matches the original when validated
+          using bcrypt.
+    """
+    hashed = Auth.hash_password(password=credentials['password'])
 
     assert isinstance(hashed, str)
-    assert hashed != password
-    assert bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
+    assert hashed != credentials['password']
+    assert bcrypt.checkpw(credentials['password'].encode('utf-8'), hashed.encode('utf-8'))
 
 
-def test_verify_password_returns_true_for_correct_password():
-    """Ensure verify_password returns True for a matching password."""
-    password = "123"
-    hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+@pytest.mark.parametrize("password, expected", [
+    ('123', True),
+    ('WrongPassword', False)
+])
+def test_verify_password(credentials, password, expected):
+    """
+    Verify that the verify_password() method behaves correctly for both
+    matching and non-matching passwords.
 
-    assert Auth.verify_password(password, hashed) is True
+    Parameters (via parametrize):
+        - password (str): Input password to be checked.
+        - expected (bool): Expected result (True if match, False otherwise).
+
+    Fixtures:
+        - credentials: Provides the valid hashed password.
+
+    The test ensures that Auth.verify_password() returns the correct boolean
+    value depending on whether the given password matches the stored hash.
+    """
+    assert Auth.verify_password(password, credentials['hashed']) is expected
 
 
-def test_verify_password_returns_false_for_incorrect_password():
-    """Ensure verify_password returns False for a wrong password."""
-    password = "123"
-    hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+@pytest.mark.parametrize("username, password, expected", [
+    ('admin', '123', True),
+    ('user', '123', False),
+    ('admin', '1234', False),
+])
+def test_auth(credentials, username, password, expected):
+    """
+    Test the auth() method for different combinations of username and password.
 
-    assert Auth.verify_password("WrongPassword", hashed) is False
+    Parameters (via parametrize):
+        - username (str): Username provided for authentication.
+        - password (str): Password provided for authentication.
+        - expected (bool): Expected result (True for success, False for failure).
 
+    Fixtures:
+        - credentials: Provides valid user credentials (username and hash).
 
-def test_auth_returns_true_when_username_and_password_match():
-    """Ensure auth() return True when username and password are correct."""
-    expected_username = "admin"
-    password = "123"
-    hashed = Auth.hash_password(password=password)
-
+    The test mocks an employee object and checks whether Auth.auth() returns
+    the expected authentication result for each scenario.
+    """
     employee = Mock()
-    employee.username = expected_username
-    employee.password_hash = hashed
+    employee.username = credentials['username']
+    employee.password_hash = credentials['hashed']
 
-    assert Auth.auth(employee, expected_username, password) is True
-
-
-def test_auth_returns_false_when_username_is_wrong():
-    """Ensure auth() return False when username does not match."""
-    expected_username = "admin"
-    password = "123"
-    hashed = Auth.hash_password(password=password)
-
-    employee = Mock()
-    employee.username = expected_username
-    employee.password_hash = hashed
-
-    assert Auth.auth(employee, "wrong_username", password) is False
-
-
-def test_auth_returns_false_when_password_is_wrong():
-    """Ensure auth() return False when password does not match."""
-    expected_username = "admin"
-    password = "123"
-    hashed = Auth.hash_password(password=password)
-
-    employee = Mock()
-    employee.username = expected_username
-    employee.password_hash = hashed
-
-    assert Auth.auth(employee, expected_username, "wrong_password") is False
+    assert Auth.auth(employee, username, password) is expected
