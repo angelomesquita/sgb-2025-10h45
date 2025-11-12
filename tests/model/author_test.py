@@ -1,38 +1,58 @@
+import pytest
+
 from model.author import Author
 
 
-def test_it_should_create_author_default_deleted_false():
-    """Checks if the author is created correctly with deleted=False by default."""
-    author = Author(author_id="JD01", name="John Doe")
-    assert author.author_id == "JD01"
-    assert author.name == "John Doe"
-    assert author.deleted is False
+@pytest.fixture
+def author_default():
+    """
+    Provides a default Author instance for testing.
+
+    Returns:
+        - Author: An Author object with ID 'JD01', name 'John Doe', and deleted=False.
+    """
+    return Author(author_id='JD01', name='John Doe')
 
 
-def test_it_should_create_author_with_deleted_true():
-    """Checks if the author can be created with deleted=True"""
-    author = Author(author_id="JD01", name="John Doe", deleted=True)
-    assert author.deleted is True
+@pytest.mark.parametrize('deleted, expected', [
+    (False, False),
+    (True, True),
+])
+def test_author_creation_deleted_flag(deleted, expected):
+    """
+    Checks that the Author instance is created with the correct deleted flag.
+
+    Parameters (via parametrize):
+        - deleted (bool): Value passed during Author creation.
+        - expected (bool): Expected value for the deleted attribute.
+    """
+    author = Author(author_id="JD01", name="John Doe", deleted=deleted)
+    assert author.deleted is expected
 
 
-def test_it_should_check_setters_update_values_correctly():
-    """Checks if the setters correctly update the attribute values."""
-    author = Author(author_id="JD01", name="John Doe")
+def test_author_setters_update_attributes(author_default):
+    """
+    Verifies that the Author's setters correctly update its attributes.
 
+    Fixture:
+        - author_default: Provides an Authr instance with default values.
+    """
     expected_id = "JD02"
     expected_name = "John Doe UPDATED"
     expected_deleted = True
 
-    author.author_id = expected_id
-    author.name = expected_name
-    author.deleted = expected_deleted
-    assert author.author_id == expected_id
-    assert author.name == expected_name
-    assert author.deleted is expected_deleted
+    author_default.author_id = expected_id
+    author_default.name = expected_name
+    author_default.deleted = expected_deleted
+
+    assert author_default.author_id == expected_id
+    assert author_default.name == expected_name
+    assert author_default.deleted is expected_deleted
 
 
-def test_it_should_check_str_representation():
-    """Checks if the __str__ method returns the correctly formatted string"""
-    author = Author(author_id="JD01", name="John Doe")
+def test_author_str_returns_formatted_string(author_default):
+    """
+    Checks that the __str__ method returns the correctly formatted string representation.
+    """
     expected = "ID: JD01 - Name: John Doe"
-    assert str(author) == expected
+    assert str(author_default) == expected
