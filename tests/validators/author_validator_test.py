@@ -5,15 +5,6 @@ import pytest
 from validators.author_validator import AuthorValidator
 
 
-@pytest.fixture
-def sample_author():
-    """Fixture that returns a mock author instance."""
-    author = Mock()
-    author.name = "Ana"
-    author.deleted = False
-    return author
-
-
 @pytest.mark.parametrize('author_id, expected', [
     ('12345', True),
     ('123A', False),
