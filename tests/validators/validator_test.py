@@ -1,37 +1,35 @@
+import pytest
+
 from validators.validator import Validator
 
 
-def test_not_empty_with_non_empty_string():
-    """Should return True for a non-empty string."""
-    assert Validator.not_empty("Hello") is True
+@pytest.mark.parametrize('value, expected', [
+    ('Hello', True),
+    ('    ', False),
+    ('', False)
+])
+def test_not_empty(value, expected):
+    """Checks that not_empty return True for non-empty strings and False otherwise."""
+    assert Validator.not_empty(value) is expected
 
 
-def test_not_empty_with_whitespace_string():
-    """Should return False when string contains only spaces."""
-    assert Validator.not_empty("    ") is False
+@pytest.mark.parametrize('value, min_length, expected', [
+    ('Hello', 3, True),  # Longer that min_length
+    ('Hi', 3, False),  # Shorter than min_length
+    ('    ', 1, False),  # Whitespace only
+    ('  Test  ', 4, True),  # Trimmed string valid
+])
+def test_min_length(value, min_length, expected):
+    """Checks that min_length validates string length correctly, ignoring whitespaces."""
+    assert Validator.min_length(value, min_length) is expected
 
 
-def test_not_empty_with_empty_string():
-    """Should return False when string is empty."""
-    assert Validator.not_empty("") is False
-
-
-# TODO: test_min_length_valid_string():
-
-
-# TODO: test_min_length_invalid_string():
-
-
-# TODO: test_min_length_ignores_whitespace():
-
-
-# TODO: test_is_numeric_with_digits_only():
-
-
-# TODO: test_is_numeric_with_letters():
-
-
-# TODO: test_is_numeric_with_empty_string():
-
-
-# TODO: test_is_numeric_with_spaces():
+@pytest.mark.parametrize('value, expected', [
+    ('12345', True),
+    ('12a45', False),
+    ('', False),
+    ('  ', False),
+])
+def test_is_numeric(value, expected):
+    """Checks that is_numeric return True only when string contain digits only."""
+    assert Validator.is_numeric(value) is expected
