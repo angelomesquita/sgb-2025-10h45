@@ -1,6 +1,6 @@
 from typing import List, Tuple, Set
 from model.author import Author
-from model.author_dao import AuthorDao
+from model.author_file_dao import AuthorFileDao
 from model.exceptions import AuthorNotFoundError
 
 
@@ -9,7 +9,7 @@ class AuthorRepository:
     @staticmethod
     def get_all_authors() -> List[Author]:
         """Load all authors from DAO (active and deleted)"""
-        return AuthorDao.load_all()
+        return AuthorFileDao.load_all()
 
     @staticmethod
     def get_author_by_id(author_id: str) -> Author:

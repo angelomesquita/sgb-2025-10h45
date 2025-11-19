@@ -1,6 +1,6 @@
 from controller.base_controller import BaseController
 from model.author import Author
-from model.author_dao import AuthorDao
+from model.author_file_dao import AuthorFileDao
 from model.logger import author_logger
 from model.exceptions import (
     AuthorAlreadyExistsError,
@@ -12,7 +12,7 @@ from model.exceptions import (
 
 class AuthorController(BaseController[Author]):
 
-    dao_class = AuthorDao
+    dao_class = AuthorFileDao
     logger = author_logger
 
     AlreadyExistsError = AuthorAlreadyExistsError

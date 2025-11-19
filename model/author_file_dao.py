@@ -2,7 +2,7 @@ from model.file_dao import FileDao
 from model.author import Author
 
 
-class AuthorDao(FileDao[Author]):
+class AuthorFileDao(FileDao[Author]):
     _FILE_PATH = 'authors.txt'
 
     @staticmethod
