@@ -1,8 +1,8 @@
-from model.base_dao import BaseDao
+from model.file_dao import FileDao
 from model.employee import Employee
 
 
-class EmployeeDao(BaseDao[Employee]):
+class EmployeeDao(FileDao[Employee]):
     _FILE_PATH = 'employees.txt'
 
     @staticmethod

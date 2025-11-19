@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 T = TypeVar("T")  # Generic Type (Customer, Employee, etc...)
 
 
-class BaseDao(ABC, Generic[T]):
+class FileDao(ABC, Generic[T]):
     _FILE_PATH: str
 
     @classmethod

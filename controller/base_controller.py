@@ -2,7 +2,7 @@ import logging
 from typing import Generic, List, Optional, Type, TypeVar
 from abc import ABC, abstractmethod
 from model.auth import Auth
-from model.base_dao import BaseDao
+from model.file_dao import FileDao
 from model.person import Person
 from model.cpf import Cpf
 
@@ -13,7 +13,7 @@ D = TypeVar("D")  # Generic type (DAO)
 # TODO: Exceptions.py
 
 class BaseController(ABC, Generic[T]):
-    dao_class: Type[BaseDao[T]]
+    dao_class: Type[FileDao[T]]
     logger: logging.Logger = logging.getLogger(__name__)
 
     AlreadyExistsError: Type[Exception] = Exception

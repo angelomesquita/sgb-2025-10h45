@@ -1,8 +1,8 @@
-from model.base_dao import BaseDao
+from model.file_dao import FileDao
 from model.author import Author
 
 
-class AuthorDao(BaseDao[Author]):
+class AuthorDao(FileDao[Author]):
     _FILE_PATH = 'authors.txt'
 
     @staticmethod

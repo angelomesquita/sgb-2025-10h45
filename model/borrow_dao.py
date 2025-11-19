@@ -1,11 +1,11 @@
-from model.base_dao import BaseDao
+from model.file_dao import FileDao
 from model.borrow import Borrow
 from repository.book_repository import BookRepository
 from repository.employee_repository import EmployeeRepository
 from repository.customer_repository import CustomerRepository
 
 
-class BorrowDao(BaseDao[Borrow]):
+class BorrowDao(FileDao[Borrow]):
 
     _FILE_PATH = 'borrows.txt'
 

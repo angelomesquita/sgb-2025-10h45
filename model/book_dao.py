@@ -1,10 +1,10 @@
-from model.base_dao import BaseDao
+from model.file_dao import FileDao
 from model.book import Book
 from repository.author_repository import AuthorRepository
 from repository.publisher_repository import PublisherRepository
 
 
-class BookDao(BaseDao[Book]):
+class BookDao(FileDao[Book]):
     _FILE_PATH = 'books.txt'
 
     @staticmethod

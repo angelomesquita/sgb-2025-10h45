@@ -1,8 +1,8 @@
-from model.base_dao import BaseDao
+from model.file_dao import FileDao
 from model.publisher import Publisher
 
 
-class PublisherDao(BaseDao[Publisher]):
+class PublisherDao(FileDao[Publisher]):
     _FILE_PATH = 'publishers.txt'
 
     @staticmethod
