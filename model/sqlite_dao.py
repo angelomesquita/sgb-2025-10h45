@@ -39,3 +39,8 @@ class SqliteDao(ABC, Generic[T]):
     @abstractmethod
     def delete(cls, item_id: str) -> None:
         pass
+
+    @classmethod
+    @abstractmethod
+    def restore(cls, item_id: str) -> T:
+        pass

@@ -78,3 +78,11 @@ class AuthorSqliteDao(SqliteDao[Author]):
                 'UPDATE authors SET deleted = 1 WHERE author_id = ?', (author_id, )
             )
             connection.commit()
+
+    @classmethod
+    def restore(cls, author_id: str) -> None:
+        with cls._get_connection() as connection:
+            connection.execute(
+                'UPDATE authors SET deleted = 0 WHERE author_id = ?', (author_id, )
+            )
+            connection.commit()
