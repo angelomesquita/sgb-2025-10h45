@@ -94,26 +94,26 @@ class BaseControllerSqlite(ABC, Generic[T]):
         print(message)
 
     def delete(self, key_value: str) -> None:
-        item = self.dao_class.get_by_id(item_id=key_value)
+        item = self.dao_class.get_by_id(key_value)
 
         if not item:
             print(f'Entry not found!\n')
             return
 
-        self.dao_class.delete(item_id=key_value)
+        self.dao_class.delete(key_value)
 
         message = f'{item.__class__.__name__} successfully deleted!\n'
         self.logger.info(f"{message} [{item}]")
         print(message)
 
     def restore(self, key_value: str) -> None:
-        item = self.dao_class.get_by_id(item_id=key_value)
+        item = self.dao_class.get_by_id(key_value, deleted=1)
 
         if not item:
             print(f'Entry not found!\n')
             return
 
-        self.dao_class.restore(item_id=key_value)
+        self.dao_class.restore(key_value)
 
         message = f'{item.__class__.__name__} successfully restored!\n'
         self.logger.info(f"{message} [{item}]")
