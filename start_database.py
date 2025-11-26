@@ -1,6 +1,6 @@
-from model.author_sqlite_dao import AuthorSqliteDao
+from model.author_dao import AuthorDao
 
 
 if __name__ == '__main__':
-    AuthorSqliteDao.create_table()
+    AuthorDao.create_table()
     print('Author table created successfully.')

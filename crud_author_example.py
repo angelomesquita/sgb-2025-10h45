@@ -1,9 +1,9 @@
-from model.author_sqlite_dao import AuthorSqliteDao
+from model.author_dao import AuthorDao
 from controller.author_controller import AuthorController
 
 if __name__ == "__main__":
 
-    AuthorSqliteDao.create_table()
+    AuthorDao.create_table()
 
     controller = AuthorController()
 

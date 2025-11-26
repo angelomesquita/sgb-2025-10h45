@@ -4,7 +4,7 @@ from model.author import Author
 from model.sqlite_dao import SqliteDao, T
 
 
-class AuthorSqliteDao(SqliteDao[Author]):
+class AuthorDao(SqliteDao[Author]):
 
     @classmethod
     def create_table(cls) -> None:

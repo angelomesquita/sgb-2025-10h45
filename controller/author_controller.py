@@ -1,6 +1,6 @@
 from controller.base_controller_sqlite import BaseControllerSqlite
 from model.author import Author
-from model.author_sqlite_dao import AuthorSqliteDao
+from model.author_dao import AuthorDao
 from model.logger import author_logger
 from model.exceptions import (
     AuthorAlreadyExistsError,
@@ -12,7 +12,7 @@ from model.exceptions import (
 
 class AuthorController(BaseControllerSqlite[Author]):
 
-    dao_class = AuthorSqliteDao
+    dao_class = AuthorDao
     logger = author_logger
 
     AlreadyExistsError = AuthorAlreadyExistsError
