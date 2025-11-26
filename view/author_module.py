@@ -104,7 +104,7 @@ class AuthorModule(tk.Toplevel):
             return
 
         try:
-            self.controller.register(author_id, name)
+            self.controller.register(author_id=author_id, name=name)
             messagebox.showinfo("Success", f"Author: '{name}' registered successfully.")
             self.load_authors()
             self.clear_form()
@@ -116,13 +116,14 @@ class AuthorModule(tk.Toplevel):
             messagebox.showwarning("Warning", "Select an author to update.")
             return
 
+        author_id = self.entry_id.get().strip()
         name = self.entry_name.get().strip()
         if not AuthorValidator.validate_name(name):
             messagebox.showerror("Validation Error", "Name must be at least 3 characters.")
             return
 
         try:
-            self.controller.update(self.selected_author_id, name)
+            self.controller.update(author_id=author_id, name=name)
             messagebox.showinfo("Success", "Author updated successfully.")
             self.load_authors()
             self.clear_form()
