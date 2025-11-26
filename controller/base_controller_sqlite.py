@@ -7,7 +7,6 @@ from model.person import Person
 from model.sqlite_dao import SqliteDao
 
 T = TypeVar("T")
-D = TypeVar("D")
 
 
 # TODO: Exceptions.py
@@ -25,15 +24,14 @@ class BaseControllerSqlite(ABC, Generic[T]):
     def __init__(self, model_class: Type[T], key_field: str = 'cpf'):
         self.model_class = model_class
         self.key_field = key_field
-        self.items: List[T] = []
 
     @abstractmethod
     def create_instance(self, *args, **kwargs) -> T:
         """Creates a new instance of the object (Customer, Employee, etc...)"""
         pass
 
-    def register(self, *args, **kwargs):
-        key_value = kwargs.get(self.key_field) or (args[0] if len(args) == 1 else None)
+    def register(self, **kwargs):
+        key_value = kwargs.get(self.key_field)
 
         if not key_value:
             print(f'❌ {self.key_field} is required.')
@@ -41,7 +39,6 @@ class BaseControllerSqlite(ABC, Generic[T]):
             if not Cpf.validate(key_value):
                 print(f'Invalid {self.key_field}. Try again.\n')
                 return
-
         if issubclass(self.model_class, Person) and "password" in kwargs:
             password = kwargs.pop("password")
             kwargs["password_hash"] = Auth.hash_password(password)
@@ -73,7 +70,28 @@ class BaseControllerSqlite(ABC, Generic[T]):
         return items
 
     def find(self, key_value: str) -> Optional[T]:
-        return self.dao_class.get_by_id(item_id=key_value)
+        return self.dao_class.get_by_id(key_value)
+
+    def update(self, *args, **kwargs) -> None:
+        key_value = kwargs.get(self.key_field) or (args[0] if len(args) == 1 else None)
+        item = self.dao_class.get_by_id(key_value)
+
+        if not item:
+            print("Entry not found.")
+            return
+
+        for field, value in kwargs.items():
+            if value is not None:
+                if field == "password":
+                    setattr(item, "password_hash", Auth.hash_password(value))
+                else:
+                    setattr(item, field, value)
+
+        self.dao_class.save(item)
+
+        message = f'✅ {item.__class__.__name__} successfully updated!\n'
+        self.logger.info(f"{message} [{item}]")
+        print(message)
 
     def delete(self, key_value: str) -> None:
         item = self.dao_class.get_by_id(item_id=key_value)
