@@ -106,15 +106,17 @@ class BaseControllerSqlite(ABC, Generic[T]):
         self.logger.info(f"{message} [{item}]")
         print(message)
 
-    def restore(self, key_value: str) -> None:
+    def restore(self, key_value: str) -> bool:
         item = self.dao_class.get_by_id(key_value, deleted=1)
 
         if not item:
             print(f'Entry not found!\n')
-            return
+            return False
 
         self.dao_class.restore(key_value)
 
         message = f'{item.__class__.__name__} successfully restored!\n'
         self.logger.info(f"{message} [{item}]")
         print(message)
+
+        return True

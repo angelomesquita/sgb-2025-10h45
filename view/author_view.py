@@ -38,8 +38,8 @@ class AuthorView(View):
 
     def register(self) -> None:
         print('\n=== Register Author ===')
-        data = self.get_author_data()
-        self.controller.register(*data)
+        author_id, name = self.get_author_data()
+        self.controller.register(author_id=author_id, name=name)
         self.press_enter_to_continue()
         self.clear_screen()
 
@@ -54,8 +54,8 @@ class AuthorView(View):
         author_id = self.get_author_id()
         author = self.controller.find(author_id)
         if author:
-            data = self.get_author_data()
-            self.controller.update(*data)
+            author_id, name = self.get_author_data()
+            self.controller.update(author_id=author_id, name=name)
         else:
             print(self.__NOT_FOUND)
         self.press_enter_to_continue()
@@ -75,10 +75,8 @@ class AuthorView(View):
     def restore(self) -> None:
         print('\n=== Restore Author ===')
         author_id = self.get_author_id()
-        author = self.controller.find_deleted(author_id)
-        if author:
-            self.controller.restore(author_id)
-        else:
+        is_restored = self.controller.restore(author_id)
+        if not is_restored:
             print(self.__NOT_FOUND)
         self.press_enter_to_continue()
         self.clear_screen()

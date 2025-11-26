@@ -32,7 +32,7 @@ class SqliteDao(ABC, Generic[T]):
 
     @classmethod
     @abstractmethod
-    def get_by_id(cls, item_id: str) -> Optional[T]:
+    def get_by_id(cls, item_id: str, deleted: int = 0) -> Optional[T]:
         pass
 
     @classmethod
