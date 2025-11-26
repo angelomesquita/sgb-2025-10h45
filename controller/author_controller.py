@@ -1,6 +1,6 @@
-from controller.base_controller import BaseController
+from controller.base_controller_sqlite import BaseControllerSqlite
 from model.author import Author
-from model.author_file_dao import AuthorFileDao
+from model.author_sqlite_dao import AuthorSqliteDao
 from model.logger import author_logger
 from model.exceptions import (
     AuthorAlreadyExistsError,
@@ -10,9 +10,9 @@ from model.exceptions import (
 )
 
 
-class AuthorController(BaseController[Author]):
+class AuthorController(BaseControllerSqlite[Author]):
 
-    dao_class = AuthorFileDao
+    dao_class = AuthorSqliteDao
     logger = author_logger
 
     AlreadyExistsError = AuthorAlreadyExistsError
@@ -23,14 +23,8 @@ class AuthorController(BaseController[Author]):
     def __init__(self):
         super().__init__(model_class=Author, key_field="author_id")
 
-    def register(self, author_id: str, name: str) -> None:
-        super().register(author_id, name=name)
-
     def create_instance(self, author_id: str, name: str, deleted: bool = False) -> Author:
-        return Author(author_id, name, deleted)
-
-    def update(self, author_id: str, name: str) -> None:
-        super().update(author_id, name=name)
+        return Author(author_id=author_id, name=name, deleted=deleted)
 
     # TODO: def delete(self, author_id: str) -> None
     # TODO: search book_repository if exists book with this author
