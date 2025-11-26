@@ -56,10 +56,10 @@ class AuthorSqliteDao(SqliteDao[Author]):
         return authors
 
     @classmethod
-    def get_by_id(cls, author_id: str) -> Optional[Author]:
+    def get_by_id(cls, author_id: str, deleted: int = 0) -> Optional[Author]:
         with cls._get_connection() as connection:
             row = connection.execute(
-                'SELECT * FROM authors WHERE author_id = ? AND deleted = 0', (author_id, )
+                'SELECT * FROM authors WHERE author_id = ? AND deleted = ?', (author_id, deleted, )
             ).fetchone()
 
         if row is None:
