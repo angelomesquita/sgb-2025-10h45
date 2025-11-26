@@ -2,7 +2,7 @@ import pytest
 
 from unittest.mock import patch
 from model.author import Author
-from model.author_file_dao import AuthorFileDao
+from model.author_sqlite_dao import AuthorSqliteDao
 from repository.author_repository import AuthorRepository
 from model.exceptions import AuthorNotFoundError
 
@@ -19,7 +19,7 @@ def sample_authors():
 
 def test_get_all_authors_return_authors(sample_authors):
     """Ensures get_all_authors() returns all author loaded from DAO."""
-    with patch.object(AuthorFileDao, 'load_all', return_value=sample_authors) as mock_load_all:
+    with patch.object(AuthorSqliteDao, 'get_all', return_value=sample_authors) as mock_load_all:
         result = AuthorRepository.get_all_authors()
         assert result == sample_authors
         mock_load_all.assert_called_once()
@@ -32,7 +32,7 @@ def test_get_all_authors_return_authors(sample_authors):
 ])
 def test_get_author_by_id_return_author(sample_authors, author_id, expected_name):
     """Ensures get_author_by_id() returns the correct Author when found."""
-    with patch.object(AuthorFileDao, 'load_all', return_value=sample_authors) as mock_load_all:
+    with patch.object(AuthorSqliteDao, 'get_all', return_value=sample_authors) as mock_load_all:
         author = AuthorRepository.get_author_by_id(author_id)
         assert author.name == expected_name
         mock_load_all.assert_called_once()
@@ -40,14 +40,14 @@ def test_get_author_by_id_return_author(sample_authors, author_id, expected_name
 
 def test_get_author_by_id_raises_error(sample_authors):
     """Ensures get_author_by_id() raises AuthorNotFoundError when ID is not found."""
-    with patch.object(AuthorFileDao, 'load_all', return_value=sample_authors):
+    with patch.object(AuthorSqliteDao, 'get_all', return_value=sample_authors):
         with pytest.raises(AuthorNotFoundError, match="Author with ID X999 not found."):
             AuthorRepository.get_author_by_id('X999')
 
 
 def test_options_returns_only_active_authors(sample_authors):
     """Ensure options() return tuples (id, name) only for non-deleted authors."""
-    with patch.object(AuthorFileDao, 'load_all', return_value=sample_authors) as mock_load_all:
+    with patch.object(AuthorSqliteDao, 'get_all', return_value=sample_authors) as mock_load_all:
         result = AuthorRepository.options()
         expected = [('A1', 'Alice'), ('A3', 'Carol')]
         assert result == expected
