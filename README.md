@@ -24,13 +24,18 @@ Desenvolver um sistema de gerenciamento para bibliteoca escolar utilizando os co
 - Lição 13 - Módulo de Coleções: Listas, Tuplas, Conjuntos, Dicionários
 - Lição 14 - Tipos e estrutura de dados
 - Lição 15 - Validação de dados
+- Lição 16 - Conexão e manipulação do banco de dados
+- Lição 17 - Paradigma orientado a eventos: formulários
+- Lição 18 - Uso de controles (Eventos e Propriedades)
+- Lição 19 - Frameworks de testes do Python
+- Lição 20 - Montando cenários de testes com Pytest
 
 ## ✅ Requisitos Implementados
 - [X] RF001 - Cadastro de Funcionários: Permitir o registro de funcionários responsáveis pela biblioteca com dados como nome, CPF, cargo e login de acesso e senha.
 - [X] RF002 - Possibilitar o cadastro de usuários da biblioteca com nome, CPF, contato e categoria (exemplo: estudante, professor, visitante)
 - [X] RF003 - Cadastro de Livros: Registrar os livros no sistema com informações como título, autor, editora, ano de publicação, ISBN e quantidade disponível.
 - [X] RF004 - Consulta e Pesquisa de Livros: Permitir busca por livros com filtros como título, autor e disponibilidade.
-- [ ] RF005 - Registrar o empréstimo de um livro, vinculando-o a um usuário e a uma data de retirada e devolução prevista.
+- [X] RF005 - Registrar o empréstimo de um livro, vinculando-o a um usuário e a uma data de retirada e devolução prevista.
 
 ## 📝 Como executar
 ```bash
