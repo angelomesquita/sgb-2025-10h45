@@ -19,7 +19,7 @@ def sample_publishers():
 
 def test_get_all_publishers_return_publishers(sample_publishers):
     """Ensures get_all_publishers() returns all publisher loaded from DAO."""
-    with patch.object(PublisherDao, 'load_all', return_value=sample_publishers) as mock_load_all:
+    with patch.object(PublisherDao, 'get_all', return_value=sample_publishers) as mock_load_all:
         result = PublisherRepository._get_all_publishers()
         assert result == sample_publishers
         mock_load_all.assert_called_once()
@@ -32,7 +32,7 @@ def test_get_all_publishers_return_publishers(sample_publishers):
 ])
 def test_get_publisher_by_id_return_publisher(sample_publishers, publisher_id, expected_legal_name):
     """Ensures get_publisher_by_id() returns the correct Publisher when found."""
-    with patch.object(PublisherDao, 'load_all', return_value=sample_publishers) as mock_load_all:
+    with patch.object(PublisherDao, 'get_all', return_value=sample_publishers) as mock_load_all:
         publisher = PublisherRepository.get_publisher_by_id(publisher_id)
         assert publisher.legal_name == expected_legal_name
         mock_load_all.assert_called_once()
@@ -40,14 +40,14 @@ def test_get_publisher_by_id_return_publisher(sample_publishers, publisher_id, e
 
 def test_get_publisher_by_id_raises_error(sample_publishers):
     """Ensures get_publisher_by_id() raises PublisherNotFoundError when ID is not found."""
-    with patch.object(PublisherDao, 'load_all', return_value=sample_publishers):
+    with patch.object(PublisherDao, 'get_all', return_value=sample_publishers):
         with pytest.raises(PublisherNotFoundError, match="Publisher with ID X999 not found."):
             PublisherRepository.get_publisher_by_id('X999')
 
 
 def test_options_returns_only_active_publishers(sample_publishers):
     """Ensure options() return tuples (id, legal_name) only for non-deleted publishers."""
-    with patch.object(PublisherDao, 'load_all', return_value=sample_publishers) as mock_load_all:
+    with patch.object(PublisherDao, 'get_all', return_value=sample_publishers) as mock_load_all:
         result = PublisherRepository.options()
         expected = [('P1', 'Publisher 1'), ('P3', 'Publisher 3')]
         assert result == expected
