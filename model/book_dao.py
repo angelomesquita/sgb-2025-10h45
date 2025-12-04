@@ -111,6 +111,6 @@ class BookDao(SqliteDao[Book]):
     def restore(cls, isbn: str) -> None:
         with cls._get_connection() as connection:
             connection.execute(
-                'UPDATE books SET deleted = 0 WHERE isb = ?', (isbn, )
+                'UPDATE books SET deleted = 0 WHERE isbn = ?', (isbn, )
             )
             connection.commit()
