@@ -5,7 +5,6 @@ from view.book_view import BookView
 from view.borrow_view import BorrowView
 from view.customer_view import CustomerView
 from view.employee_view import EmployeeView
-from view.publisher_view import PublisherView
 
 
 class LibraryApp(tk.Tk):
@@ -68,7 +67,8 @@ class LibraryApp(tk.Tk):
         self._open_module_window("Customer Module", CustomerView)
 
     def open_publisher_module(self):
-        self._open_module_window("Publisher Module", PublisherView)
+        from view.publisher_module import PublisherModule
+        PublisherModule(self)
 
     def _open_module_window(self, title, view_class):
         try:
