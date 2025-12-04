@@ -4,7 +4,7 @@ from model.author import Author
 
 
 @pytest.fixture
-def author_default():
+def publisher_default():
     """
     Provides a default Author instance for testing.
 
@@ -30,29 +30,29 @@ def test_author_creation_deleted_flag(deleted, expected):
     assert author.deleted is expected
 
 
-def test_author_setters_update_attributes(author_default):
+def test_author_setters_update_attributes(publisher_default):
     """
     Verifies that the Author's setters correctly update its attributes.
 
     Fixture:
-        - author_default: Provides an Authr instance with default values.
+        - author_default: Provides an Author instance with default values.
     """
     expected_id = "JD02"
     expected_name = "John Doe UPDATED"
     expected_deleted = True
 
-    author_default.author_id = expected_id
-    author_default.name = expected_name
-    author_default.deleted = expected_deleted
+    publisher_default.author_id = expected_id
+    publisher_default.name = expected_name
+    publisher_default.deleted = expected_deleted
 
-    assert author_default.author_id == expected_id
-    assert author_default.name == expected_name
-    assert author_default.deleted is expected_deleted
+    assert publisher_default.author_id == expected_id
+    assert publisher_default.name == expected_name
+    assert publisher_default.deleted is expected_deleted
 
 
-def test_author_str_returns_formatted_string(author_default):
+def test_author_str_returns_formatted_string(publisher_default):
     """
     Checks that the __str__ method returns the correctly formatted string representation.
     """
     expected = "ID: JD01 - Name: John Doe"
-    assert str(author_default) == expected
+    assert str(publisher_default) == expected
