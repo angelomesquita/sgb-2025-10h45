@@ -1,6 +1,6 @@
 from typing import Optional, Iterable
 
-from model.sqlite_dao import SqliteDao, T
+from model.sqlite_dao import SqliteDao
 from model.book import Book
 from repository.author_repository import AuthorRepository
 from repository.publisher_repository import PublisherRepository
