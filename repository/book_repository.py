@@ -1,4 +1,5 @@
-from typing import Iterable, List, Optional
+from typing import Iterable, Optional
+
 from model.book import Book
 from model.book_dao import BookDao
 from model.exceptions import BookNotAvailableError, BookNotFoundError
@@ -45,9 +46,6 @@ class BookRepository:
     def decrease_quantity(isbn: str, amount: int = 1) -> Optional[bool]:
         book = BookRepository.get_book_by_isbn(isbn)
 
-        if book is None:
-            raise BookNotFoundError(f"Book with isbn {isbn} not found.")
-
         if (book.quantity - amount) < 0:
             raise BookNotAvailableError(f"Book '{book.title}' is out of stock.")
 
@@ -58,9 +56,6 @@ class BookRepository:
     @staticmethod
     def increase_quantity(isbn: str, amount: int = 1) -> Optional[bool]:
         book = BookRepository.get_book_by_isbn(isbn)
-
-        if book is None:
-            raise BookNotFoundError(f"Book with isbn {isbn} not found.")
 
         book.quantity += amount
         BookDao.save(book)
