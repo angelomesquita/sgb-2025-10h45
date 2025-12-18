@@ -12,6 +12,8 @@ from repository.publisher_repository import PublisherRepository
 from model.author import Author
 from model.publisher import Publisher
 
+import pdb
+
 
 class BookModule(tk.Toplevel):
 
@@ -200,10 +202,14 @@ class BookModule(tk.Toplevel):
 
         isbn = self.entry_isbn.get().strip()
         title = self.entry_title.get().strip()
-        author = self.entry_author.get().strip()
-        publisher = self.entry_publisher.get().strip()
         year = self.entry_year.get().strip()
         quantity = self.entry_quantity.get().strip()
+
+        author_label = self.entry_author.get().strip()
+        author = self._authors_by_label.get(author_label)
+
+        publisher_label = self.entry_publisher.get().strip()
+        publisher = self._publishers_by_label.get(publisher_label)
 
         if not BookValidator.validate_isbn(isbn):
             messagebox.showerror("Validation Error", "Invalid ISBN. Must be numeric.")
@@ -213,14 +219,11 @@ class BookModule(tk.Toplevel):
             messagebox.showerror("Validation Error", "title must be at least 5 characters.")
             return
 
-        # TODO: validate_author
-        # TODO: validate_publisher
-
-        if not BookValidator.validate_year(author):
+        if not BookValidator.validate_year(year):
             messagebox.showerror("Validation Error", "Year must be less than or equal to the current year.")
             return
 
-        if not BookValidator.validate_quantity(publisher):
+        if not BookValidator.validate_quantity(quantity):
             messagebox.showerror("Validation Error", "Quantity must be greater than zero and must be numeric")
             return
 
@@ -295,17 +298,17 @@ class BookModule(tk.Toplevel):
         publisher_legal_name = values[3]
 
         author_label = next(
-            (label for label in self._authors_by_label if label == f"{author_name.author_id} - {author_name.name}"),
+            (label for label, author in self._authors_by_label.items() if author.name == author_name),
             None
         )
         publisher_label = next(
-            (label for label in self._publishers_by_label if label == f"{publisher_legal_name.publisher_id} - {publisher_legal_name.legal_name}"),
+            (label for label, publisher in self._publishers_by_label.items() if publisher.legal_name == publisher_legal_name),
             None
         )
 
         if author_label:
             self.entry_author.set(author_label)
-        if publisher_legal_name:
+        if publisher_label:
             self.entry_publisher.set(publisher_label)
 
     def load_author_options(self) -> None:

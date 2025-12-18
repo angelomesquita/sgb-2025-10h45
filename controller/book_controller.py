@@ -1,5 +1,7 @@
 from controller.base_controller_sqlite import BaseControllerSqlite
+from model.author import Author
 from model.book import Book
+from model.publisher import Publisher
 from model.book_dao import BookDao
 from model.logger import book_logger
 from model.exceptions import (
@@ -26,10 +28,16 @@ class BookController(BaseControllerSqlite[Book]):
     def __init__(self):
         super().__init__(model_class=Book, key_field="isbn")
 
-    def create_instance(self, isbn: str, title: str, author_id: str, publisher_id: str, year: int, quantity: int, deleted: bool = False) -> Book:
-        author = AuthorRepository.get_author_by_id(author_id)
-        publisher = PublisherRepository.get_publisher_by_id(publisher_id)
-        return Book(isbn, title, author, publisher, year, quantity, deleted)
+    def create_instance(self, isbn: str, title: str, author: Author, publisher: Publisher, year: int, quantity: int, deleted: bool = False) -> Book:
+        return Book(
+            isbn=isbn,
+            title=title,
+            author=author,
+            publisher=publisher,
+            year=year,
+            quantity=quantity,
+            deleted=deleted
+        )
 
     """def adjust_quantity(self, isbn: str, amount: str) -> None:
         book = self.find(isbn)
