@@ -13,13 +13,15 @@ class BookValidator:
         return Validator.min_length(title, 5)
 
     @staticmethod
-    def validate_year(year: int) -> bool:
+    def validate_year(year: str) -> bool:
         current_year = datetime.now().year
-        return 0 < year <= current_year
+        return 0 < int(year) <= current_year
 
     @staticmethod
-    def validate_quantity(quantity: int) -> bool:
-        return quantity > 0 and Validator.is_numeric(str(quantity)) and isinstance(quantity, int)
+    def validate_quantity(quantity: str) -> bool:
+        if not Validator.is_numeric(quantity):
+            return False
+        return int(quantity) > 0
 
     @staticmethod
     def validate_amount(amount: str) -> bool:
