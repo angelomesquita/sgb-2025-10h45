@@ -43,7 +43,7 @@ class BookModule(tk.Toplevel):
 
     def create_window(self):
         self.title("Book Module")
-        self.geometry("1000x400")
+        self.geometry("1100x400")
         self.resizable(False, False)
         self.style.theme_use("clam")
 
@@ -60,27 +60,27 @@ class BookModule(tk.Toplevel):
         form_frame.pack(fill="x", padx=15, pady=15)
 
         ttk.Label(form_frame, text="ISBN:").grid(row=0, column=0, padx=5, pady=5, sticky="e")
-        self.entry_isbn = ttk.Entry(form_frame, width=22)
+        self.entry_isbn = ttk.Entry(form_frame, width=34)
         self.entry_isbn.grid(row=0, column=1, padx=5, pady=5)
 
         ttk.Label(form_frame, text="Title:").grid(row=0, column=2, padx=5, pady=5, sticky="e")
-        self.entry_title = ttk.Entry(form_frame, width=22)
+        self.entry_title = ttk.Entry(form_frame, width=34)
         self.entry_title.grid(row=0, column=3, padx=5, pady=5)
 
         ttk.Label(form_frame, text="Author:").grid(row=0, column=4, padx=5, pady=5, sticky="e")
-        self.entry_author = ttk.Combobox(form_frame, width=20, state="readonly")
+        self.entry_author = ttk.Combobox(form_frame, width=32, state="readonly")
         self.entry_author.grid(row=0, column=5, padx=5, pady=5)
 
         ttk.Label(form_frame, text="Publisher:").grid(row=1, column=0, padx=0, pady=0, sticky="e")
-        self.entry_publisher = ttk.Combobox(form_frame, width=20, state="readonly")
+        self.entry_publisher = ttk.Combobox(form_frame, width=32, state="readonly")
         self.entry_publisher.grid(row=1, column=1, padx=5, pady=5)
 
         ttk.Label(form_frame, text="Year:").grid(row=1, column=2, padx=0, pady=0, sticky="e")
-        self.entry_year = ttk.Entry(form_frame, width=22)
+        self.entry_year = ttk.Entry(form_frame, width=34)
         self.entry_year.grid(row=1, column=3, padx=5, pady=5)
 
         ttk.Label(form_frame, text="Quantity:").grid(row=1, column=4, padx=0, pady=0, sticky="e")
-        self.entry_quantity = ttk.Entry(form_frame, width=22)
+        self.entry_quantity = ttk.Entry(form_frame, width=34)
         self.entry_quantity.grid(row=1, column=5, padx=5, pady=5)
 
         button_frame = ttk.Frame(self)
