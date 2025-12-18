@@ -20,7 +20,7 @@ def sample_publishers():
 def test_get_all_publishers_return_publishers(sample_publishers):
     """Ensures get_all_publishers() returns all publisher loaded from DAO."""
     with patch.object(PublisherDao, 'get_all', return_value=sample_publishers) as mock_load_all:
-        result = PublisherRepository._get_all_publishers()
+        result = PublisherRepository.get_all_publishers()
         assert result == sample_publishers
         mock_load_all.assert_called_once()
 
