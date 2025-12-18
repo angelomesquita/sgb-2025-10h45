@@ -7,13 +7,13 @@ from model.exceptions import PublisherNotFoundError
 class PublisherRepository:
 
     @staticmethod
-    def _get_all_publishers() -> Iterable[Publisher]:
+    def get_all_publishers() -> Iterable[Publisher]:
         """Load all publishers from DAO (active and deleted)"""
         return PublisherDao.get_all()
 
     @staticmethod
     def get_publisher_by_id(publisher_id: str) -> Publisher:
-        publishers = PublisherRepository._get_all_publishers()
+        publishers = PublisherRepository.get_all_publishers()
         publisher = next((p for p in publishers if str(p.publisher_id) == publisher_id), None)
         if publisher is None:
             raise PublisherNotFoundError(f"Publisher with ID {publisher_id} not found.")
@@ -21,5 +21,5 @@ class PublisherRepository:
 
     @staticmethod
     def options() -> Iterable[Tuple[str, str]]:
-        publishers = PublisherRepository._get_all_publishers()
+        publishers = PublisherRepository.get_all_publishers()
         return [(str(p.publisher_id), p.legal_name) for p in publishers if not p.deleted]
